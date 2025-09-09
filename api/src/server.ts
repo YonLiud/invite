@@ -28,7 +28,9 @@ AppDataSource.initialize()
     app.use('/posts', postRoutes);
 
     app.get('/', (req, res) => {
-      res.send('Hello from your learning backend! 🚀');
+      res.json({
+        message: "All systems go",
+      });
     });
 
     app.listen(PORT, () => {
