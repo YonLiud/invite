@@ -7,8 +7,8 @@ export class ProfileService extends BaseService<Profile> {
     super(AppDataSource.getRepository(Profile));
   }
 
-  async createProfile(data: Partial<Profile>): Promise<Profile[]> {
-    return this.create(data);
+  async createProfile(data: Partial<Profile>): Promise<Profile> {
+    return this.createOne(data);
   }
 
   async findByUsername(username: string): Promise<Profile | null> {

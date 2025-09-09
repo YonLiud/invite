@@ -15,9 +15,19 @@ export abstract class BaseService<T extends ObjectLiteral> {
     return this.repository.findOneBy({ id } as any);
   }
 
-  async create(data: Partial<T>): Promise<T[]> {
+  async create(data: Partial<T>): Promise<T> {
     const entity = this.repository.create(data as any);
-    return this.repository.save(entity);
+    const saved = await this.repository.save(entity);
+    return Array.isArray(saved) ? saved[0] : saved;
+  }
+
+  async createOne(data: Partial<T>): Promise<T> {
+    return this.create(data);
+  }
+
+  async createMany(data: Partial<T>[]): Promise<T[]> {
+    const entities = this.repository.create(data as any);
+    return this.repository.save(entities);
   }
 
   async update(id: number, data: Partial<T>): Promise<T | null> {
