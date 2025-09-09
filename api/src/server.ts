@@ -14,33 +14,33 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use(
-  morgan("combined", {
-    stream: {
-      write: (message) => logger.info(message.trim()),
-    },
-  }),
+    morgan("combined", {
+        stream: {
+            write: (message) => logger.info(message.trim()),
+        },
+    }),
 );
 
 AppDataSource.initialize()
-  .then(async () => {
-    logger.info("Data Source has been initialized!");
+    .then(async () => {
+        logger.info("Data Source has been initialized!");
 
-    // Routes
-    app.use("/auth", authRoutes);
-    app.use("/profiles", profileRoutes);
-    app.use("/posts", postRoutes);
-    app.use("/comments", commentRoutes);
+        // Routes
+        app.use("/auth", authRoutes);
+        app.use("/profiles", profileRoutes);
+        app.use("/posts", postRoutes);
+        app.use("/comments", commentRoutes);
 
-    app.get("/", (req, res) => {
-      res.json({
-        message: "All systems go",
-      });
+        app.get("/", (req, res) => {
+            res.json({
+                message: "All systems go",
+            });
+        });
+
+        app.listen(PORT, () => {
+            logger.info(`Server is running on http://localhost:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        logger.error("Error during Data Source initialization:", err);
     });
-
-    app.listen(PORT, () => {
-      logger.info(`Server is running on http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    logger.error("Error during Data Source initialization:", err);
-  });
