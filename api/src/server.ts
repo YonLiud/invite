@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes";
 import profileRoutes from "./routes/profile.routes";
 import postRoutes from "./routes/post.routes";
 import commentRoutes from "./routes/comment.routes";
+import likeRoutes from "./routes/like.routes";
 import logger from "./utils/logger";
 import morgan from "morgan";
 
@@ -30,6 +31,7 @@ AppDataSource.initialize()
     app.use("/profiles", profileRoutes);
     app.use("/posts", postRoutes);
     app.use("/comments", commentRoutes);
+    app.use("/likes", likeRoutes);
 
     app.get("/", (req, res) => {
       res.json({

@@ -31,6 +31,10 @@ export abstract class BaseController {
         message,
         data,
       });
+      res.status(statusCode).json({
+        success: false,
+        message: "An internal server error occurred",
+      });
     } else {
       logger.info(`Error: ${statusCode} - ${message}`, {
         statusCode,

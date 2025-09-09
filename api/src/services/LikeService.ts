@@ -10,17 +10,20 @@ export class LikeService extends BaseService<Like> {
   }
 
   async likePost(authorId: number, postId: number): Promise<Like | null> {
+    // Check if like already exists
     const existingLike = await this.repository.findOne({
       where: {
         author: { id: authorId },
         post: { id: postId },
       },
+      relations: ["author", "post"],
     });
 
     if (existingLike) {
       return existingLike;
     }
 
+    // Create new like
     return this.createOne({
       author: { id: authorId } as Profile,
       post: { id: postId } as Post,
