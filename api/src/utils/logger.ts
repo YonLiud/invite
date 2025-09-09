@@ -16,7 +16,6 @@ const logger = winston.createLogger({
   ),
   defaultMeta: { service: 'invite-api' },
   transports: [
-    // Write all logs to console
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
@@ -24,12 +23,10 @@ const logger = winston.createLogger({
       )
     }),
     
-    // Write all logs to file
     new winston.transports.File({ 
       filename: path.join(logsDir, 'combined.log') 
     }),
     
-    // Write error logs to separate file
     new winston.transports.File({ 
       filename: path.join(logsDir, 'error.log'), 
       level: 'error' 

@@ -1,7 +1,12 @@
 import { Request, Response } from 'express';
+import logger from '../utils/logger';
 
 export abstract class BaseController {
     protected sendSuccess(res: Response, data: any, message?: string, statusCode: number = 200) {
+        logger.http(`Response: ${statusCode} - ${message || 'Success'}`, {
+            statusCode, data
+        });
+        
         res.status(statusCode).json({
             success: true,
             message: message || 'Request successful',
@@ -9,10 +14,21 @@ export abstract class BaseController {
         });
     }
     protected sendError(res: Response, message: string, statusCode: number = 500, data?: any) {
-        res.status(statusCode).json({
-            success: false,
-            message
-        });
+        if (statusCode >= 500) {
+            logger.warn(`Error: ${statusCode} - ${message}`, {
+                statusCode, message, data
+            });
+        }
+        else
+        {
+            logger.info(`Error: ${statusCode} - ${message}`, {
+                statusCode, message, data
+            });
+            res.status(statusCode).json({
+                success: false,
+                message
+            });
+        }
     }
     protected sendUnauthorized(res: Response, message: string = 'Unauthorized') {
         res.status(401).json({
