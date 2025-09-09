@@ -1,35 +1,35 @@
 {
-    "name": "inviteapi",
-    "version": "1.0.0",
-    "main": "index.js",
-    "scripts": {
-        "dev": "nodemon src/server.ts",
-        "build": "tsc",
-        "start": "node dist/server.js"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "description": "",
-    "devDependencies": {
-        "@types/bcryptjs": "^2.4.6",
-        "@types/express": "^5.0.3",
-        "@types/jsonwebtoken": "^9.0.10",
-        "@types/morgan": "^1.9.10",
-        "@types/node": "^24.3.1",
-        "nodemon": "^3.1.10",
-        "prettier": "^3.6.2",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.9.2"
-    },
-    "dependencies": {
-        "bcryptjs": "^3.0.2",
-        "express": "^5.1.0",
-        "jsonwebtoken": "^9.0.2",
-        "morgan": "^1.10.1",
-        "pg": "^8.16.3",
-        "reflect-metadata": "^0.2.2",
-        "typeorm": "^0.3.26",
-        "winston": "^3.17.0"
-    }
+  "name": "inviteapi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.3.1",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.26",
+    "winston": "^3.17.0"
+  }
 }

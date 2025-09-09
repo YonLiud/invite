@@ -4,10 +4,10 @@ import { Profile } from "./Profile";
 
 @Entity()
 export class Post extends BaseModel {
-    @ManyToOne(() => Profile, (profile) => profile.posts)
-    @JoinColumn({ name: "author_id" })
-    author!: Profile;
+  @ManyToOne(() => Profile, (profile) => profile.posts)
+  @JoinColumn({ name: "author_id" })
+  author!: Profile;
 
-    @Column({ type: "text", nullable: true })
-    content?: string;
+  @Column({ type: "text", nullable: true })
+  content?: string;
 }

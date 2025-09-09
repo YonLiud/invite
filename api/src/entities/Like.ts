@@ -6,11 +6,11 @@ import { Post } from "./Post";
 @Entity()
 @Unique(["author", "post"]) // Enforce unique like per user/post
 export class Like extends BaseModel {
-    @ManyToOne(() => Profile)
-    @JoinColumn({ name: "author_id" })
-    author!: Profile;
+  @ManyToOne(() => Profile)
+  @JoinColumn({ name: "author_id" })
+  author!: Profile;
 
-    @ManyToOne(() => Post)
-    @JoinColumn({ name: "post_id" })
-    post!: Post;
+  @ManyToOne(() => Post)
+  @JoinColumn({ name: "post_id" })
+  post!: Post;
 }

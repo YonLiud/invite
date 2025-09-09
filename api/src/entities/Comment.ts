@@ -5,14 +5,14 @@ import { Post } from "./Post";
 
 @Entity()
 export class Comment extends BaseModel {
-    @ManyToOne(() => Profile)
-    @JoinColumn({ name: "author_id" })
-    author!: Profile;
+  @ManyToOne(() => Profile)
+  @JoinColumn({ name: "author_id" })
+  author!: Profile;
 
-    @ManyToOne(() => Post)
-    @JoinColumn({ name: "post_id" })
-    post!: Post;
+  @ManyToOne(() => Post)
+  @JoinColumn({ name: "post_id" })
+  post!: Post;
 
-    @Column({ type: "text", nullable: true })
-    content?: string;
+  @Column({ type: "text", nullable: true })
+  content?: string;
 }
