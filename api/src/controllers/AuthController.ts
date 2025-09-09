@@ -82,4 +82,66 @@ export class AuthController extends BaseController {
             }
         }
     }
+
+    async refresh(req: Request, res: Response): Promise<void> {
+        try {
+            const { refreshToken } = req.body;
+
+            if (!refreshToken) {
+                return this.sendValidationError(res, ['Refresh token is required.']);
+            }
+
+            const result = await this.authService.refreshAccessToken(refreshToken);
+            if (!result) {
+                return this.sendUnauthorized(res, 'Invalid or expired refresh token');
+            }
+
+            this.sendSuccess(res, result, 'Token refreshed successfully');
+        } catch (error) {
+            if (error instanceof Error) {
+                this.sendError(res, error.message, 500);
+            } else {
+                this.sendError(res, 'Unknown error occurred', 500);
+            }
+        }
+    }
+
+    async logout(req: Request, res: Response): Promise<void> {
+        try {
+            const { refreshToken } = req.body;
+            if (!refreshToken) {
+                return this.sendValidationError(res, ['Refresh token is required.']);
+            }
+            const result = await this.authService.logout(refreshToken);
+            if (!result) {
+                return this.sendUnauthorized(res, 'Invalid refresh token');
+            }
+            this.sendSuccess(res, null, 'Logged out successfully');
+            return;
+        } catch (error) {
+            if (error instanceof Error) {
+                this.sendError(res, error.message, 500);
+            } else {
+                this.sendError(res, 'Unknown error occurred', 500);
+            }
+        }
+    }
+
+    async logoutAllSessions(req: Request, res: Response): Promise<void> {
+        try {
+            if (!req.user) {
+                return this.sendUnauthorized(res, 'Authentication required');
+            }
+
+            await this.authService.logoutAllSessions(req.user.id);
+            
+            this.sendSuccess(res, null, 'All sessions logged out successfully');
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                this.sendError(res, err.message, 500);
+            } else {
+                this.sendError(res, 'Unknown error occurred', 500);
+            }
+        }
+    }
 }
