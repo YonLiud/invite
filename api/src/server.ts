@@ -6,6 +6,10 @@ import profileRoutes from "./routes/profile.routes";
 import postRoutes from "./routes/post.routes";
 import commentRoutes from "./routes/comment.routes";
 import likeRoutes from "./routes/like.routes";
+import {
+  globalErrorHandler,
+  notFoundHandler,
+} from "./middleware/error.middleware";
 import logger from "./utils/logger";
 import morgan from "morgan";
 
@@ -21,6 +25,9 @@ app.use(
     },
   }),
 );
+
+app.use(notFoundHandler);
+app.use(globalErrorHandler);
 
 AppDataSource.initialize()
   .then(async () => {
