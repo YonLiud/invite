@@ -51,4 +51,37 @@ export class AuthService {
         await this.refreshTokenRepository.save(refreshTokenEntity);
         return { user: profile, accessToken, refreshToken };
     }
+
+    async login(username: string, password: string): Promise<{
+        user: Profile,
+        accessToken: string,
+        refreshToken: string
+    } | null> {
+        // find by username
+        const profile = await this.profileService.findByUsername(username);
+        if (!profile) {
+            return null;
+        }
+
+        const isValidPassword = await comparePassword(password, profile.password_hash);
+        if (!isValidPassword) {
+            return null;
+        }
+        const payload: JwtPayload = { 
+            profileId: profile.id, 
+            username: profile.username 
+        };
+        const accessToken = generateAccessToken(payload);
+        const refreshToken = generateRefreshToken(payload);
+
+        const hashedToken = await hashPassword(refreshToken);
+        const refreshTokenEntity = this.refreshTokenRepository.create({
+            user: profile,
+            token_hash: hashedToken,
+            expires_at: new Date(Date.now() + this.REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 * 1000)
+        });
+
+        await this.refreshTokenRepository.save(refreshTokenEntity);
+        return { user: profile, accessToken, refreshToken };
+    }
 }
