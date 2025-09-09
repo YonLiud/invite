@@ -7,6 +7,12 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.use(morgan('combined', {
+  stream: {
+    write: (message) => logger.info(message.trim())
+  }
+}))
+
 AppDataSource.initialize()
   .then(() => {
     console.log("✅ Data Source has been initialized!");
