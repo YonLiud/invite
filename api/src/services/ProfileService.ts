@@ -12,20 +12,27 @@ export class ProfileService extends BaseService<Profile> {
     return this.repository.findOneBy({ username });
   }
 
-  async createProfile(username: string, password: string, displayName?: string): Promise<Profile> {
+  async createProfile(
+    username: string,
+    password: string,
+    displayName?: string,
+  ): Promise<Profile> {
     const password_hash = await hashPassword(password);
     return this.createOne({
       username,
       password_hash,
-      display_name: displayName
+      display_name: displayName,
     });
   }
 
-  async updateProfile(profileId: number, updates: {
-    display_name?: string;
-    current_password?: string;
-    new_password?: string;
-  }): Promise<Profile | null> {
+  async updateProfile(
+    profileId: number,
+    updates: {
+      display_name?: string;
+      current_password?: string;
+      new_password?: string;
+    },
+  ): Promise<Profile | null> {
     const profile = await this.findById(profileId);
     if (!profile) {
       return null;
@@ -33,28 +40,31 @@ export class ProfileService extends BaseService<Profile> {
 
     if (updates.new_password) {
       if (!updates.current_password) {
-        throw new Error('Current password is required to change password');
+        throw new Error("Current password is required to change password");
       }
-      
-      const isValid = await comparePassword(updates.current_password, profile.password_hash);
+
+      const isValid = await comparePassword(
+        updates.current_password,
+        profile.password_hash,
+      );
       if (!isValid) {
-        throw new Error('Current password is incorrect');
+        throw new Error("Current password is incorrect");
       }
-      
+
       const updateData: Partial<Profile> = {
-        display_name: updates.display_name
+        display_name: updates.display_name,
       };
-      
+
       const newPasswordHash = await hashPassword(updates.new_password);
-      updateData['password_hash'] = newPasswordHash;
-      
+      updateData["password_hash"] = newPasswordHash;
+
       return this.update(profileId, updateData);
     }
 
     const updateData: Partial<Profile> = {
-      display_name: updates.display_name
+      display_name: updates.display_name,
     };
-    
+
     return this.update(profileId, updateData);
   }
 
@@ -63,10 +73,14 @@ export class ProfileService extends BaseService<Profile> {
   }
 
   async searchProfiles(query: string, limit: number = 20): Promise<Profile[]> {
-    return this.repository.createQueryBuilder('profile')
-      .where('profile.username ILIKE :query OR profile.display_name ILIKE :query', {
-        query: `%${query}%`
-      })
+    return this.repository
+      .createQueryBuilder("profile")
+      .where(
+        "profile.username ILIKE :query OR profile.display_name ILIKE :query",
+        {
+          query: `%${query}%`,
+        },
+      )
       .limit(limit)
       .getMany();
   }

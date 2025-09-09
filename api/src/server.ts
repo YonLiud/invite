@@ -1,35 +1,37 @@
 import "reflect-metadata";
-import express from 'express';
-import { AppDataSource } from './data-source';
-import authRoutes from './routes/auth.routes';
-import profileRoutes from './routes/profile.routes';
-import postRoutes from './routes/post.routes';
-import commentRoutes from './routes/comment.routes';
-import logger from './utils/logger';
-import morgan from 'morgan';
+import express from "express";
+import { AppDataSource } from "./data-source";
+import authRoutes from "./routes/auth.routes";
+import profileRoutes from "./routes/profile.routes";
+import postRoutes from "./routes/post.routes";
+import commentRoutes from "./routes/comment.routes";
+import logger from "./utils/logger";
+import morgan from "morgan";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.use(morgan('combined', {
-  stream: {
-    write: (message) => logger.info(message.trim())
-  }
-}))
+app.use(
+  morgan("combined", {
+    stream: {
+      write: (message) => logger.info(message.trim()),
+    },
+  }),
+);
 
 AppDataSource.initialize()
   .then(async () => {
     logger.info("Data Source has been initialized!");
 
     // Routes
-    app.use('/auth', authRoutes);
-    app.use('/profiles', profileRoutes);
-    app.use('/posts', postRoutes);
-    app.use('/comments', commentRoutes);
+    app.use("/auth", authRoutes);
+    app.use("/profiles", profileRoutes);
+    app.use("/posts", postRoutes);
+    app.use("/comments", commentRoutes);
 
-    app.get('/', (req, res) => {
+    app.get("/", (req, res) => {
       res.json({
         message: "All systems go",
       });
