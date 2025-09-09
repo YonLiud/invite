@@ -2,6 +2,7 @@ import "reflect-metadata";
 import express from 'express';
 import { AppDataSource } from './data-source';
 import authRoutes from './routes/auth.routes';
+import profileRoutes from './routes/profile.routes';
 import logger from './utils/logger';
 import morgan from 'morgan';
 
@@ -22,6 +23,7 @@ AppDataSource.initialize()
 
     // Routes
     app.use('/auth', authRoutes);
+    app.use('/profiles', profileRoutes);
 
     app.get('/', (req, res) => {
       res.send('Hello from your learning backend! 🚀');

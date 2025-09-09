@@ -7,7 +7,8 @@ export abstract class BaseService<T extends ObjectLiteral> {
     this.repository = repository;
   }
 
-  async findAll(): Promise<T[]> {
+  async findAll(limit?: number): Promise<T[]> {
+    if (limit) return this.repository.find({ take: limit });
     return this.repository.find();
   }
 
