@@ -4,7 +4,6 @@ import { hashPassword, comparePassword } from "../utils/password";
 import { generateAccessToken, generateRefreshToken, JwtPayload, verifyToken } from "../utils/jwt";
 import { RefreshToken } from "../entities/RefreshToken";
 import { AppDataSource } from "../data-source";
-import { verify } from "crypto";
 
 export class AuthService {
     private profileService: ProfileService;

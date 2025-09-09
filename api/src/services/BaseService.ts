@@ -1,4 +1,5 @@
 import { Repository, ObjectLiteral } from "typeorm";
+import logger from "../utils/logger";
 
 export abstract class BaseService<T extends ObjectLiteral> {
   protected repository: Repository<T>;
@@ -19,6 +20,7 @@ export abstract class BaseService<T extends ObjectLiteral> {
   async create(data: Partial<T>): Promise<T> {
     const entity = this.repository.create(data as any);
     const saved = await this.repository.save(entity);
+    logger.debug("Created entity:", saved);
     return Array.isArray(saved) ? saved[0] : saved;
   }
 
@@ -33,11 +35,13 @@ export abstract class BaseService<T extends ObjectLiteral> {
 
   async update(id: number, data: Partial<T>): Promise<T | null> {
     await this.repository.update(id, data as any);
+    logger.debug(`Updated entity with id ${id}:`, data);
     return this.findById(id);
   }
 
   async delete(id: number): Promise<boolean> {
     const result = await this.repository.delete(id);
+    logger.debug(`Deleted entity with id ${id}:`, result);
     return result.affected !== 0;
   }
 }
