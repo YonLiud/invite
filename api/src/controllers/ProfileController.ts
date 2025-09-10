@@ -26,7 +26,7 @@ export class ProfileController extends BaseController {
       const profileResponse = {
         id: profile.id,
         username: profile.username,
-        displayName: profile.display_name,
+        display_name: profile.display_name,
         createdAt: profile.created_at,
       };
       this.sendSuccess(res, profileResponse);
@@ -69,12 +69,12 @@ export class ProfileController extends BaseController {
       const profileResponse = {
         id: updatedProfile.id,
         username: updatedProfile.username,
-        displayName: updatedProfile.display_name,
+        display_name: updatedProfile.display_name,
         createdAt: updatedProfile.created_at,
         updatedAt: updatedProfile.updated_at,
       };
 
-      this.sendSuccess(res, profileResponse, "Profile updated successfully");
+      this.sendSuccess(res, profileResponse, "Profile updated successfully", 200);
     } catch (error) {
       if (error instanceof Error) {
         this.sendError(res, error.message, 500);
@@ -130,10 +130,10 @@ export class ProfileController extends BaseController {
       const profilesResponse = profiles.map((profile) => ({
         id: profile.id,
         username: profile.username,
-        displayName: profile.display_name,
+        display_name: profile.display_name,
         createdAt: profile.created_at,
       }));
-      this.sendSuccess(res, profilesResponse);
+      this.sendSuccess(res, profilesResponse, "", 200);
     } catch (error) {
       if (error instanceof Error) {
         this.sendError(res, error.message, 500);
@@ -158,7 +158,7 @@ export class ProfileController extends BaseController {
       const profilesResponse = profiles.map((profile) => ({
         id: profile.id,
         username: profile.username,
-        displayName: profile.display_name,
+        display_name: profile.display_name,
         createdAt: profile.created_at,
       }));
       this.sendSuccess(res, profilesResponse);
@@ -185,7 +185,7 @@ export class ProfileController extends BaseController {
       const profileResponse = {
         id: profile.id,
         username: profile.username,
-        displayName: profile.display_name,
+        display_name: profile.display_name,
         createdAt: profile.created_at,
       };
       this.sendSuccess(res, profileResponse);
@@ -211,7 +211,7 @@ export class ProfileController extends BaseController {
       const profileResponse = {
         id: profile.id,
         username: profile.username,
-        displayName: profile.display_name,
+        display_name: profile.display_name,
         createdAt: profile.created_at,
         updatedAt: profile.updated_at,
       };

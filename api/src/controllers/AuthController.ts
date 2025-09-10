@@ -12,9 +12,9 @@ export class AuthController extends BaseController {
 
   async register(req: Request, res: Response): Promise<void> {
     try {
-      const { username, password, displayName } = req.body;
+      const { username, password, display_name } = req.body;
 
-      if (!username || !password || !displayName) {
+      if (!username || !password || !display_name) {
         this.sendValidationError(res, [
           "Username, password, and display name are required.",
         ]);
@@ -24,7 +24,7 @@ export class AuthController extends BaseController {
       const result = await this.authService.register(
         username,
         password,
-        displayName,
+        display_name,
       );
       if (!result) {
         this.sendError(res, "Username already taken", 400);
@@ -35,7 +35,7 @@ export class AuthController extends BaseController {
       const userResponse = {
         id: user.id,
         username: user.username,
-        displayName: user.display_name,
+        display_name: user.display_name,
         createdAt: user.created_at,
       };
 
@@ -62,8 +62,7 @@ export class AuthController extends BaseController {
     try {
       const { username, password } = req.body;
       if (!username || !password) {
-        this.sendValidationError(res, ["Username and password are required."]);
-        return;
+        return this.sendError(res, 'Username and password are required', 400);
       }
       const result = await this.authService.login(username, password);
       if (!result) {
@@ -75,7 +74,7 @@ export class AuthController extends BaseController {
       const userResponse = {
         id: user.id,
         username: user.username,
-        displayName: user.display_name,
+        display_name: user.display_name,
         createdAt: user.created_at,
       };
 
@@ -87,6 +86,7 @@ export class AuthController extends BaseController {
           refreshToken,
         },
         "Login successful",
+        201
       );
     } catch (error) {
       if (error instanceof Error) {
@@ -110,7 +110,7 @@ export class AuthController extends BaseController {
         return this.sendUnauthorized(res, "Invalid or expired refresh token");
       }
 
-      this.sendSuccess(res, result, "Token refreshed successfully");
+      this.sendSuccess(res, result, "Token refreshed successfully", 201);
     } catch (error) {
       if (error instanceof Error) {
         this.sendError(res, error.message, 500);

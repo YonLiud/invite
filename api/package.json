@@ -10,7 +10,9 @@
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage",
     "test:setup": "docker run --name invite-postgres-test -e POSTGRES_DB=invitedb_test -e POSTGRES_USER=inviteadmin -e POSTGRES_PASSWORD=secret -p 5433:5432 -d postgres:16",
-    "test:teardown": "docker stop invite-postgres-test && docker rm invite-postgres-test"
+    "test:teardown": "docker stop invite-postgres-test && docker rm invite-postgres-test",
+    "test:unit": "cross-env NODE_ENV=test jest tests/unit --maxWorkers=1",
+    "test:integration": "cross-env NODE_ENV=test jest tests/integration --maxWorkers=1"
   },
   "keywords": [],
   "author": "",

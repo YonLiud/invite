@@ -31,7 +31,7 @@ export class PostController extends BaseController {
         return;
       }
 
-      const post = await this.postService.createPost(req.user, content.trim());
+      const post = await this.postService.createPost(req.user.id, content.trim());
 
       const postResponse = {
         id: post.id,
@@ -39,7 +39,7 @@ export class PostController extends BaseController {
         author: {
           id: post.author.id,
           username: post.author.username,
-          displayName: post.author.display_name,
+          display_name: post.author.display_name,
         },
         createdAt: post.created_at,
       };
@@ -73,7 +73,7 @@ export class PostController extends BaseController {
         author: {
           id: post.author.id,
           username: post.author.username,
-          displayName: post.author.display_name,
+          display_name: post.author.display_name,
         },
         createdAt: post.created_at,
       }));
@@ -114,7 +114,7 @@ export class PostController extends BaseController {
         author: {
           id: post.author.id,
           username: post.author.username,
-          displayName: post.author.display_name,
+          display_name: post.author.display_name,
         },
         createdAt: post.created_at,
       };
@@ -149,7 +149,7 @@ export class PostController extends BaseController {
         author: {
           id: post.author.id,
           username: post.author.username,
-          displayName: post.author.display_name,
+          display_name: post.author.display_name,
         },
         createdAt: post.created_at,
       }));
@@ -201,7 +201,7 @@ export class PostController extends BaseController {
         author: {
           id: updatedPost.author.id,
           username: updatedPost.author.username,
-          displayName: updatedPost.author.display_name,
+          display_name: updatedPost.author.display_name,
         },
         createdAt: updatedPost.created_at,
       };

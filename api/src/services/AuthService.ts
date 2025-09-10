@@ -23,7 +23,7 @@ export class AuthService {
   async register(
     username: string,
     password: string,
-    displayName: string,
+    display_name: string,
   ): Promise<{
     user: Profile;
     accessToken: string;
@@ -39,7 +39,7 @@ export class AuthService {
     const profile = await this.profileService.createOne({
       username: username,
       password_hash: password_hash,
-      display_name: displayName,
+      display_name: display_name,
     });
 
     const payload: JwtPayload = {

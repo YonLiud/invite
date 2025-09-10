@@ -15,13 +15,13 @@ export class ProfileService extends BaseService<Profile> {
   async createProfile(
     username: string,
     password: string,
-    displayName?: string,
+    display_name?: string,
   ): Promise<Profile> {
     const password_hash = await hashPassword(password);
     return this.createOne({
       username,
       password_hash,
-      display_name: displayName,
+      display_name: display_name,
     });
   }
 

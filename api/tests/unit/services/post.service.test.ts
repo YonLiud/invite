@@ -16,7 +16,7 @@ describe('PostService', () => {
     testUser = await createTestUser({
       username: generateUniqueUsername(), // Always unique
       password: 'password123',
-      displayName: 'Test User'
+      display_name: 'Test User'
     });
   });
 
@@ -70,7 +70,7 @@ describe('PostService', () => {
       const anotherUser = await createTestUser({
         username: 'anotheruser',
         password: 'password123',
-        displayName: 'Another User'
+        display_name: 'Another User'
       });
       
       await postService.createPost(testUser.id, 'Test user post 1');
@@ -138,7 +138,7 @@ describe('PostService', () => {
       const anotherUser = await createTestUser({
         username: 'anotheruser',
         password: 'password123',
-        displayName: 'Another User'
+        display_name: 'Another User'
       });
       
       const post = await postService.createPost(testUser.id, 'Test post');
@@ -173,7 +173,7 @@ describe('PostService', () => {
       const anotherUser = await createTestUser({
         username: 'anotheruser',
         password: 'password123',
-        displayName: 'Another User'
+        display_name: 'Another User'
       });
       
       const post = await postService.createPost(testUser.id, 'Test post');

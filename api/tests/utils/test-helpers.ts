@@ -10,7 +10,7 @@ import { AppDataSource } from "../../src/data-source";
 export interface TestUserData {
   username: string;
   password: string;
-  displayName?: string;
+  display_name?: string;
 }
 
 // Test post data factory
@@ -38,7 +38,7 @@ export const createTestUser = async (userData: TestUserData): Promise<Profile> =
   const profile = profileRepository.create({
     username: username,
     password_hash,
-    display_name: userData.displayName
+    display_name: userData.display_name
   });
   
   return await profileRepository.save(profile);

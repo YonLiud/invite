@@ -15,7 +15,7 @@ describe('CommentService', () => {
     testUser = await createTestUser({
       username: 'testuser_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
       password: 'password123',
-      displayName: 'Test User'
+      display_name: 'Test User'
     });
     testPost = await createTestPost({
       content: 'Test post for comments',
@@ -87,7 +87,7 @@ describe('CommentService', () => {
       const anotherUser = await createTestUser({
         username: 'anotheruser_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
         password: 'password123',
-        displayName: 'Another User'
+        display_name: 'Another User'
       });
       
       const comment = await commentService.createComment(
