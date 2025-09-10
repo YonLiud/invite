@@ -8,25 +8,19 @@ export class PostService extends BaseService<Post> {
     super(AppDataSource.getRepository(Post));
   }
 
-  async createPost(author: Profile, content: string): Promise<Post> {
+  async createPost(authorId: number, content: string): Promise<Post> {
     return this.createOne({
-      author,
-      content,
-      created_at: new Date(),
+      author: { id: authorId } as Profile,
+      content
     });
   }
 
-  async findByAuthor(authorId: number, limit?: number): Promise<Post[]> {
-    if (limit) {
-      return this.repository.find({
-        where: { author: { id: authorId } },
-        take: limit,
-        order: { created_at: "DESC" },
-      });
-    }
+  async getPostsByAuthorId(authorId: number, limit: number = 20): Promise<Post[]> {
     return this.repository.find({
       where: { author: { id: authorId } },
       order: { created_at: "DESC" },
+      take: limit,
+      relations: ["author"]
     });
   }
 
@@ -34,17 +28,16 @@ export class PostService extends BaseService<Post> {
     username: string,
     limit?: number,
   ): Promise<Post[]> {
+    const query = this.repository.createQueryBuilder("post")
+      .leftJoinAndSelect("post.author", "author")
+      .where("author.username = :username", { username })
+      .orderBy("post.created_at", "DESC");
+    
     if (limit) {
-      return this.repository.find({
-        where: { author: { username } },
-        take: limit,
-        order: { created_at: "DESC" },
-      });
+      query.take(limit);
     }
-    return this.repository.find({
-      where: { author: { username } },
-      order: { created_at: "DESC" },
-    });
+    
+    return query.getMany();
   }
 
   async getAllPosts(
@@ -71,7 +64,10 @@ export class PostService extends BaseService<Post> {
   }
 
   async getPostById(postId: number): Promise<Post | null> {
-    return this.findById(postId);
+    return this.repository.findOne({
+      where: { id: postId },
+      relations: ["author"]
+    });
   }
 
   async updatePost(
@@ -79,7 +75,11 @@ export class PostService extends BaseService<Post> {
     authorId: number,
     content: string,
   ): Promise<Post | null> {
-    const post = await this.findById(postId);
+    const post = await this.repository.findOne({
+      where: { id: postId },
+      relations: ["author"]
+    });
+    
     if (!post || post.author.id !== authorId) {
       return null;
     }
@@ -87,7 +87,11 @@ export class PostService extends BaseService<Post> {
   }
 
   async deletePost(postId: number, authorId: number): Promise<boolean> {
-    const post = await this.findById(postId);
+    const post = await this.repository.findOne({
+      where: { id: postId },
+      relations: ["author"]
+    });
+    
     if (!post || post.author.id !== authorId) {
       return false;
     }
