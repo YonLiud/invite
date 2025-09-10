@@ -7,14 +7,14 @@ import { Comment } from "./entities/Comment";
 import { RefreshToken } from "./entities/RefreshToken";
 
 export const AppDataSource = new DataSource({
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "inviteadmin", // or your username
-  password: "secret", // or your password
-  database: "invitedb", // or your db name
-  synchronize: true, // auto-create tables (ONLY for dev!)
-  logging: false,
+  type: process.env.DB_TYPE as any || "postgres",
+  host: process.env.DB_HOST || "localhost",
+  port: parseInt(process.env.DB_PORT || "5432", 10),
+  username: process.env.DB_USERNAME || "inviteadmin",
+  password: process.env.DB_PASSWORD || "secret",
+  database: process.env.DB_NAME || "invitedb",
+  synchronize: true,
+  logging: true,
   entities: [Profile, Post, Like, Comment, RefreshToken],
   migrations: [],
   subscribers: [],
