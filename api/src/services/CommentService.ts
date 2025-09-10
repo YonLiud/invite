@@ -30,20 +30,32 @@ export class CommentService extends BaseService<Comment> {
     if (!author || !post) {
       return null;
     }
-
-    return this.createOne({
+    const createdComment = await this.createOne({
       author,
       post,
       content: content.trim(),
     });
+    const commentWithRelations = await this.repository.findOne({
+      where: { id: createdComment.id },
+      relations: ["author", "post"],
+    });
+
+    if (!commentWithRelations) {
+      throw new Error("Failed to retrieve created comment with relations");
+    }
+
+    return commentWithRelations;
   }
 
-  async getCommentsByPost(postId: number, limit: number = 20): Promise<Comment[]> {
+  async getCommentsByPost(
+    postId: number,
+    limit: number = 20,
+  ): Promise<Comment[]> {
     return this.repository.find({
       where: { post: { id: postId } },
       order: { created_at: "ASC" },
       take: limit,
-      relations: ["author"]
+      relations: ["author"],
     });
   }
 
@@ -78,7 +90,13 @@ export class CommentService extends BaseService<Comment> {
     if (!content || content.trim() === "" || content.length > 300) {
       return null;
     }
-    return this.update(id, { content: content.trim() });
+    await this.update(id, { content: content.trim() });
+    const updatedCommentWithRelations = await this.repository.findOne({
+      where: { id: id },
+      relations: ["author", "post"],
+    });
+
+    return updatedCommentWithRelations;
   }
 
   async deleteComment(id: number, authorId: number): Promise<boolean> {
@@ -89,6 +107,7 @@ export class CommentService extends BaseService<Comment> {
     }
     return this.delete(id);
   }
+
   async getCommentsWithPagination(
     postId: number,
     page: number = 1,

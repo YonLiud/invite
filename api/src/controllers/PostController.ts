@@ -31,7 +31,10 @@ export class PostController extends BaseController {
         return;
       }
 
-      const post = await this.postService.createPost(req.user.id, content.trim());
+      const post = await this.postService.createPost(
+        req.user.id,
+        content.trim(),
+      );
 
       const postResponse = {
         id: post.id,
@@ -41,7 +44,8 @@ export class PostController extends BaseController {
           username: post.author.username,
           display_name: post.author.display_name,
         },
-        createdAt: post.created_at,
+        created_at: post.created_at,
+        updated_at: post.updated_at,
       };
 
       this.sendSuccess(res, postResponse, undefined, 201);
@@ -116,7 +120,8 @@ export class PostController extends BaseController {
           username: post.author.username,
           display_name: post.author.display_name,
         },
-        createdAt: post.created_at,
+        created_at: post.created_at,
+        updated_at: post.updated_at,
       };
       this.sendSuccess(res, postResponse);
     } catch (error) {
@@ -143,19 +148,26 @@ export class PostController extends BaseController {
         limitNum,
       );
 
-      const postsResponse = posts.map((post) => ({
-        id: post.id,
-        content: post.content,
-        author: {
-          id: post.author.id,
-          username: post.author.username,
-          display_name: post.author.display_name,
-        },
-        createdAt: post.created_at,
-      }));
+      const postsResponse = posts.map((post) => {
+        if (!post.author) {
+          console.error("Post found without author relation loaded:", post.id);
+          throw new Error(`Author relation not loaded for post ${post.id}`);
+        }
+        return {
+          id: post.id,
+          content: post.content,
+          author: {
+            id: post.author.id,
+            username: post.author.username,
+            display_name: post.author.display_name,
+          },
+          createdAt: post.created_at,
+        };
+      });
 
-      this.sendSuccess(res, postsResponse);
+      this.sendSuccess(res, { posts: postsResponse });
     } catch (error) {
+      console.error("Error in getPostsByAuthor:", error);
       if (error instanceof Error) {
         this.sendError(res, error.message, 500);
       } else {
@@ -204,6 +216,7 @@ export class PostController extends BaseController {
           display_name: updatedPost.author.display_name,
         },
         createdAt: updatedPost.created_at,
+        updatedAt: updatedPost.updated_at,
       };
 
       this.sendSuccess(res, postResponse);

@@ -1,11 +1,11 @@
-import type { Config } from 'jest';
+import type { Config } from "jest";
 
 const config: Config = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  testMatch: ['<rootDir>/tests/unit/services/post.service.test.ts'],
-  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
-  testTimeout: 30000
+  preset: "ts-jest",
+  testEnvironment: "node",
+  testMatch: ["<rootDir>/tests/unit/services/post.service.test.ts"],
+  setupFilesAfterEnv: ["<rootDir>/tests/setup.ts"],
+  testTimeout: 30000,
 };
 
 export default config;

@@ -62,7 +62,7 @@ export class AuthController extends BaseController {
     try {
       const { username, password } = req.body;
       if (!username || !password) {
-        return this.sendError(res, 'Username and password are required', 400);
+        return this.sendError(res, "Username and password are required", 400);
       }
       const result = await this.authService.login(username, password);
       if (!result) {
@@ -86,7 +86,7 @@ export class AuthController extends BaseController {
           refreshToken,
         },
         "Login successful",
-        201
+        201,
       );
     } catch (error) {
       if (error instanceof Error) {

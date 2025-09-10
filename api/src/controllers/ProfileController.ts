@@ -74,7 +74,12 @@ export class ProfileController extends BaseController {
         updatedAt: updatedProfile.updated_at,
       };
 
-      this.sendSuccess(res, profileResponse, "Profile updated successfully", 200);
+      this.sendSuccess(
+        res,
+        profileResponse,
+        "Profile updated successfully",
+        200,
+      );
     } catch (error) {
       if (error instanceof Error) {
         this.sendError(res, error.message, 500);
