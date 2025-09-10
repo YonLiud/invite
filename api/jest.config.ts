@@ -1,14 +1,14 @@
 import type { Config } from 'jest';
 
-const config: Config = {
+export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: ['<rootDir>/tests'],
   testMatch: [
-    '<rootDir>/tests/unit/**/*.test.ts',
-    '<rootDir>/tests/integration/**/*.test.ts',
-    '<rootDir>/tests/**/*.test.ts'
+    '**/tests/unit/**/*.test.ts',
+    '**/tests/integration/**/*.test.ts'
   ],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.d.ts',
@@ -18,10 +18,12 @@ const config: Config = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
-  }
+  },
+  // Run tests sequentially to avoid database conflicts
+  maxWorkers: 1,
+  testTimeout: 30000,
+  clearMocks: true,
+  resetModules: true
 };
-
-export default config;

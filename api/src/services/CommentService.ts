@@ -38,15 +38,12 @@ export class CommentService extends BaseService<Comment> {
     });
   }
 
-  async getCommentsByPost(
-    postId: number,
-    limit: number = 20,
-  ): Promise<Comment[]> {
+  async getCommentsByPost(postId: number, limit: number = 20): Promise<Comment[]> {
     return this.repository.find({
       where: { post: { id: postId } },
-      relations: ["author"],
-      order: { created_at: "DESC" },
+      order: { created_at: "ASC" },
       take: limit,
+      relations: ["author"]
     });
   }
 
