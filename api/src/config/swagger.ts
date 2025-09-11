@@ -7,10 +7,10 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Invite Social Media API",
+      title: "Invite API",
       version: "1.0.0",
       description:
-        "A complete social media backend API with authentication, posts, comments, and likes",
+        "Invite API",
     },
     servers: [
       {
