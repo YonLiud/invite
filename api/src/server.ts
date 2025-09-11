@@ -6,7 +6,7 @@ import profileRoutes from "./routes/profile.routes";
 import postRoutes from "./routes/post.routes";
 import commentRoutes from "./routes/comment.routes";
 import likeRoutes from "./routes/like.routes";
-import { setupSwagger } from './config/swagger';
+import { setupSwagger } from "./config/swagger";
 import {
   globalErrorHandler,
   notFoundHandler,

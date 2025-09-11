@@ -181,7 +181,7 @@ router.post("/logout", (req, res) => authController.logout(req, res)); // Remove
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post("/logoutAll", authMiddleware, (req, res) =>
-  authController.logoutAllSessions(req, res)
+  authController.logoutAllSessions(req, res),
 );
 
 /**
