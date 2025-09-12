@@ -1,10 +1,10 @@
 import './App.module.scss';
+import LoginForm from './auth/LoginForm';
 
 export default function App() {
   return (
     <div className="app">
-      <h1>Invite Social</h1>
-      <p>Posts will appear here...</p>
+      <LoginForm />
     </div>
   );
 }
