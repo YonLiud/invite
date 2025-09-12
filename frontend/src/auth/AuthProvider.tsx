@@ -1,32 +1,27 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import * as authService from './services/authService'; // Adjust the path if needed
-import type { Profile } from '@/types/profile'; // Adjust the path if needed
+import * as authService from './services/AuthService';
+import type { Profile } from '@/types/Profile';
+import type { AuthData } from '@/types/auth';
 
-// Define the shape of our context
 interface AuthContextType {
   user: Profile | null;
   login: (data: { username: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
-  isLoading: boolean; // To indicate initial auth check
+  isLoading: boolean;
 }
 
-// Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Props for the provider component
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-// The provider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<Profile | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Start with true to check auth status
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Check if user is already logged in (e.g., valid refresh token)
   useEffect(() => {
     const initAuth = async () => {
-      // Even if not logged in, we need to finish the initial check
       setIsLoading(true);
       try {
         const userData = await authService.getCurrentUser();
@@ -44,10 +39,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (data: { username: string; password: string }) => {
-    const response = await authService.login(data);
-    console.log('[AuthProvider] Login successful, response:', response);
-    const userData = await authService.getCurrentUser();
-    setUser(userData);
+    try {
+      const response = await authService.login(data); // Let TS infer or use SuccessResponse<AuthData>
+      console.log('[AuthProvider] Login successful, response data:', response);
+      const userData = await authService.getCurrentUser();
+      setUser(userData);
+    } catch (err) {
+      throw err;
+    }
   };
 
   const logout = async () => {
@@ -55,7 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await authService.logout();
       console.log('[AuthProvider] Logout successful on backend.');
     } catch (err) {
-      console.warn('[AuthProvider] Logout API call failed (might still clear local state):', err);
+      console.warn('[AuthProvider] Logout API call failed:', err);
     } finally {
       setUser(null);
     }

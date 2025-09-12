@@ -36,9 +36,6 @@ app.use(
   }),
 );
 
-app.use(notFoundHandler);
-app.use(globalErrorHandler);
-
 AppDataSource.initialize()
   .then(async () => {
     logger.info("Data Source has been initialized!");
@@ -55,6 +52,9 @@ AppDataSource.initialize()
         message: "All systems go",
       });
     });
+
+    app.use(notFoundHandler);
+    app.use(globalErrorHandler);
 
     app.listen(PORT, () => {
       logger.info(`Server is running on http://localhost:${PORT}`);
