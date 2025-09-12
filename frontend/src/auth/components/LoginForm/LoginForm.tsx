@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Input from '../ui/Input/Input';
-import Button from '../ui/Button/Button';
-import Card from '../ui/Card/Card';
-import Spinner from '../ui/Spinner/Spinner';
-import Logo from '../ui/Logo/Logo';
+import Input from '@/ui/Input/Input';
+import Button from '@/ui/Button/Button';
+import Card from '@/ui/Card/Card';
+import Spinner from '@/ui/Spinner/Spinner';
+import Logo from '@/ui/Logo/Logo';
 import * as authService from '@/auth/services/AuthService';
 import type { LoginRequest } from '@/types/LoginRequest'; 
 
