@@ -1,0 +1,73 @@
+@use '../../styles/_variables.scss' as v;
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: v.$color-bg;
+  border-radius: v.$radius-md;
+  padding: v.$space-lg;
+  transition:
+    box-shadow v.$transition,
+    transform v.$transition-fast;
+  border: 1px solid v.$color-border-light;
+  overflow: hidden;
+
+  min-height: 180px;
+
+  @media (max-width: 600px) {
+    padding: v.$space-md;
+    min-height: 120px;
+    border-radius: v.$radius-sm;
+  }
+
+  // Base subtle elevation
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+
+  // Hover lift + glow
+  &:hover {
+    // transform: translateY(-2px);
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.06),
+      0 0 12px 0 rgba(67, 206, 162, 0.08);
+  }
+
+  // Focus ring for keyboard nav
+  &:focus-within {
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.06),
+      0 0 0 2px v.$color-focus-ring,
+      0 0 16px 0 v.$gradient-end;
+    outline: none;
+  }
+
+  // Optional: Gradient top accent bar (like your button outlines)
+  &--accent {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: v.$gradient-accent;
+      z-index: 1;
+    }
+  }
+
+  // Compact variant
+  &--compact {
+    padding: v.$space-md;
+  }
+
+  // Minimal variant — no shadow, flat
+  &--minimal {
+    box-shadow: none;
+    border: 1px solid v.$color-border;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+  }
+}
