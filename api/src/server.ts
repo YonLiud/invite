@@ -13,9 +13,17 @@ import {
 } from "./middleware/error.middleware";
 import logger from "./utils/logger";
 import morgan from "morgan";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
 app.use(express.json());
 setupSwagger(app);
