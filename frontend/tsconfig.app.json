@@ -21,7 +21,18 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": ".", // Add this
+    "paths": {      // Add this entire block
+      "@/*": ["src/*"],
+      "@ui/*": ["src/ui/*"],
+      "@auth/*": ["src/auth/*"],
+      "@posts/*": ["src/posts/*"],
+      "@comments/*": ["src/comments/*"],
+      "@likes/*": ["src/likes/*"]
+    },
+    "composite": true
   },
   "include": ["src"]
 }
