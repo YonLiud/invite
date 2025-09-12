@@ -5,9 +5,9 @@ import { authMiddleware } from "../middleware/auth.middleware";
 const router = Router();
 const profileController = new ProfileController();
 
-router.get("/", (req, res) => profileController.listProfiles(req, res));
-router.get("/search", (req, res) => profileController.searchProfiles(req, res));
-router.get("/:username", (req, res) =>
+router.get("/", authMiddleware, (req, res) => profileController.listProfiles(req, res));
+router.get("/search", authMiddleware, (req, res) => profileController.searchProfiles(req, res));
+router.get("/:username", authMiddleware, (req, res) =>
   profileController.getProfileByUsername(req, res),
 );
 
