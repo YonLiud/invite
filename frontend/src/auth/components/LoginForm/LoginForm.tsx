@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Input from '@/ui/Input/Input';
 import Button from '@/ui/Button/Button';
 import Card from '@/ui/Card/Card';
 import Spinner from '@/ui/Spinner/Spinner';
 import Logo from '@/ui/Logo/Logo';
-import * as authService from '@/auth/services/AuthService';
-import type { LoginRequest } from '@/types/LoginRequest'; 
+import { useAuth } from '@/auth/AuthProvider';
+import type { LoginRequest } from '@/types/LoginRequest';
 
 export default function LoginForm() {
   const [formData, setFormData] = useState<LoginRequest>({
@@ -15,7 +15,8 @@ export default function LoginForm() {
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,10 +29,9 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      const response = await authService.login(formData);
-      console.log('[LoginForm] Login successful:', response);
-
-      navigate('/'); 
+      await login(formData);
+      console.log('[LoginForm] Login successful and AuthProvider state updated.');
+      navigate('/');
 
     } catch (err: any) {
       console.error('[LoginForm] Login failed:', err);
@@ -99,6 +99,11 @@ export default function LoginForm() {
           )}
         </Button>
       </form>
+
+       <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem' }}>
+        <span>Don't have an account? </span>
+        <Link to="/register" style={{ color: '#007bff', textDecoration: 'none' }}>Sign Up</Link>
+      </div>
     </Card>
   );
 }

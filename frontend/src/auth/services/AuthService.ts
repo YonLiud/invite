@@ -2,11 +2,12 @@ import api, { setAccessToken } from '@/services/api';
 import type {
   AuthResponseWithData,
   RefreshResponse,
+  AuthMeResponse,
 } from '@/types/auth'; 
 import type { LoginRequest } from '@/types/LoginRequest';
 import type { RegisterRequest } from '@/types/RegisterRequest';
 import type { Profile } from '@/types/Profile'; 
-import type { SuccessResponse } from '@/types/Responses';
+import { AxiosError } from 'axios';
 
 
 export const login = async (data: LoginRequest): Promise<AuthResponseWithData> => {
@@ -25,9 +26,25 @@ export const register = async (data: RegisterRequest): Promise<AuthResponseWithD
   return response.data;
 };
 
-export const getCurrentUser = async (): Promise<Profile> => {
-  const response = await api.get<SuccessResponse<Profile>>('/auth/me');
-  return response.data.data;
+export const getCurrentUser = async (): Promise<Profile | null> => {
+  try {
+    const response = await api.get<AuthMeResponse>('/auth/me');
+    console.log('[AuthService] Full /auth/me response data:', response.data);
+
+    // Adjusted to match the actual response structure
+    if (response.data.success && response.data.user) {
+      return response.data.user;
+    }
+
+    console.warn('[AuthService] Unexpected /auth/me response structure:', response.data);
+    return null;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      console.warn('[AuthService] Unauthorized access to /auth/me');
+      return null;
+    }
+    throw error;
+  }
 };
 
 export const logout = async (): Promise<void> => {

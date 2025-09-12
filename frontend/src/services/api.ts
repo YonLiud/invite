@@ -22,20 +22,18 @@ const processQueue = (error: any, token: string | null = null) => {
   failedQueue = [];
 };
 
-let accessToken: string | null = null;
-
 export const setAccessToken = (token: string | null) => {
-  //TODO set persistent access token in memory
-  accessToken = token;
+  if (token) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    console.log('[API] Authorization header set:', `Bearer ${token}`);
+  } else {
+    delete api.defaults.headers.common['Authorization'];
+    console.log('[API] Authorization header removed');
+  }
 };
-
-export const getAccessToken = () => accessToken;
 
 api.interceptors.request.use(
   (config) => {
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
     return config;
   },
   (error) => {

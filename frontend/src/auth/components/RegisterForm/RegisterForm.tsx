@@ -6,6 +6,7 @@ import Card from '@/ui/Card/Card';
 import Spinner from '@/ui/Spinner/Spinner';
 import * as authService from '@/auth/services/AuthService';
 import type { RegisterRequest } from '@/types/RegisterRequest';
+import Logo from '@/ui/Logo/Logo';
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState<RegisterRequest>({
@@ -54,6 +55,7 @@ export default function RegisterForm() {
 
   return (
     <Card>
+        <Logo />
       <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Sign Up</h2>
 
       {error && (
