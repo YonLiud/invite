@@ -1,6 +1,7 @@
 import { Outlet, Link } from 'react-router-dom';
 import { useAuth } from '@/auth/AuthProvider';
 import Logo from '@/ui/Logo/Logo';
+import Button from '@/ui/Button/Button'
 
 const MainLayout = () => {
   const { user, logout } = useAuth();
@@ -30,19 +31,7 @@ const MainLayout = () => {
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <span style={{ fontSize: '0.9rem' }}>Hello, {user.display_name || user.username}</span>
-              <button
-                onClick={handleLogout}
-                style={{
-                  padding: '0.5rem 1rem',
-                  backgroundColor: '#dc3545',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer'
-                }}
-              >
-                Logout
-              </button>
+              <Button onClick={handleLogout} variant="outline" size="sm">Logout</Button>
             </div>
           ) : (
             <Link to="/login">Login</Link>
@@ -59,9 +48,10 @@ const MainLayout = () => {
         borderTop: '1px solid #e0e0e0',
         textAlign: 'center',
         fontSize: '0.8rem',
-        color: '#666'
+        color: '#666',
+        userSelect: 'none'
       }}>
-        <p>© {new Date().getFullYear()} Invite Social</p>
+        <p>© {new Date().getFullYear()} Invite</p>
       </footer>
     </div>
   );
