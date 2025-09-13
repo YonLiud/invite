@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Heart } from 'lucide-react';
+import { useLikePost } from '../../hooks/useLikes';
 import styles from './LikeButton.module.scss';
 
 interface LikeButtonProps {
   postId: number;
   initialLiked?: boolean;
   initialCount?: number;
-  onLike?: (postId: number, isLiked: boolean) => void;
+  onLikeChange?: (postId: number, isLiked: boolean, newCount: number) => void;
   disabled?: boolean;
   className?: string;
 }
@@ -15,13 +16,14 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
   postId,
   initialLiked = false,
   initialCount = 0,
-  onLike,
+  onLikeChange,
   disabled = false,
   className = ''
 }) => {
   const [isLiked, setIsLiked] = useState(initialLiked);
   const [likesCount, setLikesCount] = useState(initialCount);
   const [isAnimating, setIsAnimating] = useState(false);
+  const { toggleLike, isLoading, error } = useLikePost();
 
   useEffect(() => {
     setIsLiked(initialLiked);
@@ -29,12 +31,14 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
   }, [initialLiked, initialCount]);
 
   const handleClick = async () => {
-    if (disabled) return;
+    if (disabled || isLoading) return;
 
     // Optimistic update
     const newLikedState = !isLiked;
+    const newCount = newLikedState ? likesCount + 1 : likesCount - 1;
+    
     setIsLiked(newLikedState);
-    setLikesCount(prev => newLikedState ? prev + 1 : prev - 1);
+    setLikesCount(newCount);
     
     // Trigger animation
     if (newLikedState) {
@@ -42,8 +46,24 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
       setTimeout(() => setIsAnimating(false), 600);
     }
 
-    // Call the callback
-    onLike?.(postId, newLikedState);
+    // Call the API
+    try {
+      const actualLikedState = await toggleLike(postId, !newLikedState);
+      
+      // Update UI with actual state from API
+      if (actualLikedState !== newLikedState) {
+        setIsLiked(actualLikedState);
+        setLikesCount(actualLikedState ? likesCount + 1 : likesCount - 1);
+      }
+      
+      // Notify parent component
+      onLikeChange?.(postId, actualLikedState, actualLikedState ? newCount : newCount);
+    } catch (err) {
+      // Revert optimistic update on error
+      setIsLiked(!newLikedState);
+      setLikesCount(likesCount);
+      console.error('Failed to toggle like:', err);
+    }
   };
 
   const buttonClasses = [

@@ -6,6 +6,7 @@ import ProfilePicture from '@/ui/ProfilePicture/ProfilePicture';
 import MenuWrapper, { type MenuOption } from '@/ui/MenuWrapper';
 import { CommentModal } from '@/comments';
 import { LikeButton } from '@/likes/components/LikeButton/LikeButton';
+import { useLikes } from '@/likes';
 import styles from './PostCard.module.scss';
 
 export interface PostCardProps {
@@ -29,12 +30,14 @@ const PostCard: React.FC<PostCardProps> = ({
   isOwnPost = false,
   className = ''
 }) => {
-  const [isLiked] = useState(false);
-  const [likesCount] = useState(0);
   const [commentsCount] = useState(0);
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  
+  // Fetch likes data for this post (auto-fetches on postId change)
+  const { count: likesCount, isLiked, updateLikeState } = useLikes(post.id);
 
-  const handleLike = (postId: number) => {
+  const handleLikeChange = (postId: number, newIsLiked: boolean, _newCount: number) => {
+    updateLikeState(newIsLiked);
     // Update any external state if needed
     onLike?.(postId);
   };
@@ -137,7 +140,7 @@ const PostCard: React.FC<PostCardProps> = ({
           postId={post.id}
           initialLiked={isLiked}
           initialCount={likesCount}
-          onLike={handleLike}
+          onLikeChange={handleLikeChange}
         />
 
         <button 

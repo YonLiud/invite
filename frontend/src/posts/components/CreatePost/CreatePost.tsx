@@ -46,7 +46,6 @@ const CreatePost: React.FC<CreatePostProps> = ({
       setIsFocused(false);
       onPostCreated?.(newPost);
       
-      // Optional: Show success feedback
       console.log('Post created successfully!');
     }
   };
@@ -78,7 +77,6 @@ const CreatePost: React.FC<CreatePostProps> = ({
     }
   };
 
-  // Auto-resize textarea
   useEffect(() => {
     const textArea = textAreaRef.current;
     if (textArea) {
