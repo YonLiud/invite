@@ -1,0 +1,10 @@
+@use "../../styles/_variables.scss" as v;
+
+:root {
+  --gradient-start: #{v.$gradient-start};
+  --gradient-end: #{v.$gradient-end};
+}
+
+.profile-picture {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}

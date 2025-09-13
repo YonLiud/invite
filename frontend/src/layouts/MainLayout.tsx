@@ -1,7 +1,8 @@
 import { Outlet, Link } from 'react-router-dom';
 import { useAuth } from '@/auth/AuthProvider';
 import Logo from '@/ui/Logo/Logo';
-import Button from '@/ui/Button/Button'
+import Button from '@/ui/Button/Button';
+import ProfilePicture from '@/ui/ProfilePicture/ProfilePicture';
 
 const MainLayout = () => {
   const { user, logout } = useAuth();
@@ -15,7 +16,7 @@ const MainLayout = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '95vh' }}>
       {/* Header */}
       <header style={{
         padding: '1rem',
@@ -30,7 +31,7 @@ const MainLayout = () => {
         <div>
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <span style={{ fontSize: '0.9rem' }}>Hello, {user.display_name || user.username}</span>
+              <ProfilePicture name={user.display_name || user.username} size={40} />
               <Button onClick={handleLogout} variant="outline" size="sm">Logout</Button>
             </div>
           ) : (
