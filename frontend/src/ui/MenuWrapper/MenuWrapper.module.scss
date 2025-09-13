@@ -30,6 +30,14 @@
 		pointer-events: auto;
 	}
 
+	// Add a small invisible bridge to help with hover
+	&::before {
+		content: '';
+		position: absolute;
+		background: transparent;
+		pointer-events: auto;
+	}
+
 	// Position variants
 	&.top {
 		bottom: 100%;
@@ -106,6 +114,13 @@
 		&.visible {
 			transform: translateY(0) scale(1);
 		}
+
+		&::before {
+			bottom: 100%;
+			right: 0;
+			width: 100%;
+			height: v.$space-xs;
+		}
 	}
 
 	&.bottom-right {
@@ -116,6 +131,13 @@
 		
 		&.visible {
 			transform: translateY(0) scale(1);
+		}
+
+		&::before {
+			bottom: 100%;
+			left: 0;
+			width: 100%;
+			height: v.$space-xs;
 		}
 	}
 }

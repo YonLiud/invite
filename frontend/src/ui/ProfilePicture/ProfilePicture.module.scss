@@ -7,4 +7,9 @@
 
 .profile-picture {
   background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  background-size: 200% 200%;
+  transition: background-position 200ms ease-in-out;
+  &:hover {
+    background-position: right center;
+  }
 }
