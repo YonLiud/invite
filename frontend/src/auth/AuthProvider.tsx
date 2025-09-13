@@ -29,15 +29,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       try {
         const token = localStorage.getItem('authToken');
         if (token) {
-          authService.setAuthToken(token); // Set token globally
+          authService.setAuthToken(token);
         }
 
         const userData = await authService.getCurrentUser();
         setUser(userData);
         console.log('[AuthProvider] User loaded from /auth/me:', userData);
 
-        // Navigate to home if user is authenticated
-        if (userData) {
+        if (userData && window.location.pathname === '/') {
           navigate('/');
         }
       } catch (err) {

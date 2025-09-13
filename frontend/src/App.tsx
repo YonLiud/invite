@@ -5,6 +5,7 @@ import MainLayout from '@/layouts/MainLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { lazy, Suspense } from 'react';
 import Spinner from '@/ui/Spinner/Spinner';
+import Profile from '@/pages/Profile/Profile';
 
 const Home = lazy(() => import('@/pages/Home')); 
 
@@ -22,6 +23,7 @@ function App() {
             </Suspense>
           </ProtectedRoute>
         } />
+        <Route path="/profile/:username" element={<Profile />} />
       </Route>
     </Routes>
   );
