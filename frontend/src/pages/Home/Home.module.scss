@@ -26,6 +26,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: v.$color-text; // Fallback for browsers that don't support background-clip
+  user-select: none;
 }
 
 .subtitle {
@@ -33,6 +34,7 @@
   color: v.$color-text-muted;
   margin: 0;
   font-weight: 400;
+  user-select: none;
 }
 
 .content {

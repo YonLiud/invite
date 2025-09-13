@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { MoreHorizontal, Heart, MessageCircle, Share, Edit, Trash2 } from 'lucide-react';
+import { MoreHorizontal, MessageCircle, Share, Edit, Trash2 } from 'lucide-react';
 import type { Post } from '@/types/Post';
 import Card from '@/ui/Card/Card';
 import ProfilePicture from '@/ui/ProfilePicture/ProfilePicture';
 import MenuWrapper, { type MenuOption } from '@/ui/MenuWrapper';
+import { CommentModal } from '@/comments';
+import { LikeButton } from '@/likes/components/LikeButton/LikeButton';
 import styles from './PostCard.module.scss';
 
 export interface PostCardProps {
@@ -27,18 +29,23 @@ const PostCard: React.FC<PostCardProps> = ({
   isOwnPost = false,
   className = ''
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
+  const [isLiked] = useState(false);
+  const [likesCount] = useState(0);
   const [commentsCount] = useState(0);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    setLikesCount(prev => isLiked ? prev - 1 : prev + 1);
-    onLike?.(post.id);
+  const handleLike = (postId: number) => {
+    // Update any external state if needed
+    onLike?.(postId);
   };
 
   const handleComment = () => {
+    setIsCommentModalOpen(true);
     onComment?.(post.id);
+  };
+
+  const handleCloseCommentModal = () => {
+    setIsCommentModalOpen(false);
   };
 
   const handleShare = () => {
@@ -126,14 +133,12 @@ const PostCard: React.FC<PostCardProps> = ({
       </div>
 
       <div className={styles.actions}>
-        <button 
-          className={`${styles.actionButton} ${isLiked ? styles.liked : ''}`}
-          onClick={handleLike}
-          aria-label={isLiked ? 'Unlike post' : 'Like post'}
-        >
-          <Heart size={18} fill={isLiked ? 'currentColor' : 'none'} />
-          {likesCount > 0 && <span className={styles.count}>{likesCount}</span>}
-        </button>
+        <LikeButton
+          postId={post.id}
+          initialLiked={isLiked}
+          initialCount={likesCount}
+          onLike={handleLike}
+        />
 
         <button 
           className={styles.actionButton}
@@ -152,6 +157,12 @@ const PostCard: React.FC<PostCardProps> = ({
           <Share size={18} />
         </button>
       </div>
+
+      <CommentModal
+        postId={post.id}
+        isOpen={isCommentModalOpen}
+        onClose={handleCloseCommentModal}
+      />
     </Card>
   );
 };

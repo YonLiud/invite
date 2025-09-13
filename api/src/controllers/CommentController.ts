@@ -56,6 +56,7 @@ export class CommentController extends BaseController {
         id: comment.id,
         content: comment.content,
         created_at: comment.created_at,
+        updated_at: comment.updated_at,
         author: {
           id: req.user.id,
           username: req.user.username,

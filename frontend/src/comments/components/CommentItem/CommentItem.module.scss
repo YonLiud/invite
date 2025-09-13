@@ -1,0 +1,220 @@
+@use "../../../styles/_variables.scss" as v;
+
+.commentItem {
+  display: flex;
+  gap: v.$space-sm;
+  padding: v.$space-md v.$space-lg;
+  transition: 
+    background-color v.$transition-fast,
+    opacity v.$transition;
+  border-bottom: 1px solid v.$color-border-light;
+  
+  &:hover {
+    background: v.$color-hover-bg;
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.deleting {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.avatar {
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: v.$space-xs;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.displayName {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: v.$color-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.username {
+  font-size: 0.8rem;
+  color: v.$color-text-muted;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+.separator {
+  color: v.$color-text-muted;
+  font-size: 0.75rem;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: v.$color-text-muted;
+  white-space: nowrap;
+}
+
+.edited {
+  font-size: 0.75rem;
+  color: v.$color-text-muted;
+  font-style: italic;
+}
+
+.menuWrapper {
+  flex-shrink: 0;
+  margin-left: v.$space-xs;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: v.$radius-sm;
+  color: v.$color-text-muted;
+  cursor: pointer;
+  transition: 
+    background-color v.$transition-fast,
+    color v.$transition-fast,
+    opacity v.$transition-fast;
+  opacity: 0;
+
+  &:hover:not(:disabled) {
+    background: v.$color-hover-bg;
+    color: v.$color-text;
+  }
+
+  &:focus-visible {
+    outline: none;
+    background: v.$color-hover-bg;
+    box-shadow: 0 0 0 2px v.$color-focus-ring;
+    opacity: 1;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.text {
+  margin-top: v.$space-xs;
+}
+
+.commentText {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: v.$color-text;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+// Show menu button on hover
+.commentItem:hover .menuButton {
+  opacity: 1;
+}
+
+// Animation for new comments
+.commentItem {
+  animation: slideInComment 0.3s ease-out;
+}
+
+@keyframes slideInComment {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .commentItem {
+    padding: v.$space-sm v.$space-md;
+    gap: v.$space-xs;
+  }
+
+  .displayName {
+    max-width: 80px;
+    font-size: 0.8rem;
+  }
+
+  .username {
+    max-width: 70px;
+    font-size: 0.75rem;
+  }
+
+  .timestamp {
+    font-size: 0.75rem;
+  }
+
+  .edited {
+    font-size: 0.7rem;
+  }
+
+  .commentText {
+    font-size: 0.85rem;
+  }
+
+  .menuButton {
+    width: 24px;
+    height: 24px;
+    opacity: 1; // Always visible on mobile
+  }
+}
+
+@media (max-width: 480px) {
+  .commentItem {
+    padding: v.$space-sm;
+  }
+
+  .authorInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: v.$space-xs;
+  }
+
+  .menuWrapper {
+    align-self: flex-end;
+    margin-left: 0;
+  }
+}

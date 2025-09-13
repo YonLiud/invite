@@ -9,6 +9,7 @@
   border-radius: v.$radius-md;
   padding: v.$space-lg;
   transition:
+    v.$transition ease-in-out,
     box-shadow v.$transition,
     transform v.$transition-fast;
   border: 1px solid v.$color-border-light;

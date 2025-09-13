@@ -29,6 +29,7 @@
   gap: v.$space-xs;
   flex-wrap: wrap;
   min-width: 0; // Allow text to truncate
+  user-select: none;
 }
 
 .displayName {

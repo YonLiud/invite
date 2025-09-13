@@ -126,7 +126,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
                 <button
                   type="button"
                   className={styles.toolbarButton}
-                  disabled={isLoading}
+                  disabled={true}
                   title="Add image"
                 >
                   <Image size={18} />
@@ -134,7 +134,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
                 <button
                   type="button"
                   className={styles.toolbarButton}
-                  disabled={isLoading}
+                  disabled={true}
                   title="Add emoji"
                 >
                   <Smile size={18} />
