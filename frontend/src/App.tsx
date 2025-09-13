@@ -7,7 +7,7 @@ import { lazy, Suspense } from 'react';
 import Spinner from '@/ui/Spinner/Spinner';
 import Profile from '@/pages/Profile/Profile';
 
-const Home = lazy(() => import('@/pages/Home')); 
+const Home = lazy(() => import('@/pages/Home/Home')); 
 
 function App() {
   return (
