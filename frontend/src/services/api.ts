@@ -1,5 +1,7 @@
 import axios from 'axios';
 import * as authService from '@/auth/services/AuthService';
+import type { RefreshResponse } from '@/types/auth';
+
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
@@ -25,10 +27,10 @@ const processQueue = (error: any, token: string | null = null) => {
 export const setAccessToken = (token: string | null) => {
   if (token) {
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    console.log('[API] Authorization header set:', `Bearer ${token}`);
+    localStorage.setItem('authToken', token); // Persist token securely
   } else {
     delete api.defaults.headers.common['Authorization'];
-    console.log('[API] Authorization header removed');
+    localStorage.removeItem('authToken'); // Remove token from storage
   }
 };
 
@@ -78,8 +80,10 @@ api.interceptors.response.use(
       } catch (err) {
         processQueue(err, null);
         setAccessToken(null);
-        // TODO: Redirect to login page (e.g., using a global event emitter or context update)
         console.error('[API Interceptor] Token refresh failed:', err);
+
+        // Redirect to login page on token refresh failure
+        // window.location.href = '/login';
         return Promise.reject(err);
       } finally {
         isRefreshing = false;
@@ -89,5 +93,15 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const refreshAccessToken = async (): Promise<RefreshResponse> => {
+  const response = await api.post<RefreshResponse>('/auth/refresh');
+
+  if (response.data.success && response.data.data?.accessToken) {
+    setAccessToken(response.data.data.accessToken);
+  }
+
+  return response.data;
+};
 
 export default api;

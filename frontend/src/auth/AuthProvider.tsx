@@ -27,6 +27,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const initAuth = async () => {
       setIsLoading(true);
       try {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+          authService.setAuthToken(token); // Set token globally
+        }
+
         const userData = await authService.getCurrentUser();
         setUser(userData);
         console.log('[AuthProvider] User loaded from /auth/me:', userData);
