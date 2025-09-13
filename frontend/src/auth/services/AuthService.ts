@@ -55,8 +55,8 @@ export const logout = async (): Promise<void> => {
   }
 };
 
-export const refreshAccessToken = async (): Promise<RefreshResponse> => {
-  const response = await api.post<RefreshResponse>('/auth/refresh');
+export const refreshAccessToken = async (data: { refreshToken: string }): Promise<RefreshResponse> => {
+  const response = await api.post<RefreshResponse>('/auth/refresh', data);
   if (response.data.success && response.data.data?.accessToken) {
     setAccessToken(response.data.data.accessToken);
   }

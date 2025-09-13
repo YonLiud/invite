@@ -67,8 +67,15 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
+      console.log('[API Interceptor] Attempting token refresh...');
+      console.log('[API Interceptor] Original request:', originalRequest);
+
       try {
-        const response = await authService.refreshAccessToken();
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!refreshToken) {
+          throw new Error('[API Interceptor] No refresh token found in localStorage.');
+        }
+        const response = await authService.refreshAccessToken({ refreshToken });
         const newAccessToken = response.data.accessToken;
 
         setAccessToken(newAccessToken);
@@ -95,10 +102,22 @@ api.interceptors.response.use(
 );
 
 export const refreshAccessToken = async (): Promise<RefreshResponse> => {
-  const response = await api.post<RefreshResponse>('/auth/refresh');
+  const refreshToken = localStorage.getItem('refreshToken');
+
+  if (!refreshToken) {
+    console.error('[API] No refresh token found in localStorage.');
+    throw new Error('[API] No refresh token found in localStorage.');
+  }
+
+  console.log('[API] Sending refresh token in request body:', refreshToken);
+
+  const response = await api.post<RefreshResponse>('/auth/refresh', { refreshToken });
 
   if (response.data.success && response.data.data?.accessToken) {
+    console.log('[API] Access token refreshed successfully.');
     setAccessToken(response.data.data.accessToken);
+  } else {
+    console.warn('[API] Refresh response did not contain a new access token.');
   }
 
   return response.data;

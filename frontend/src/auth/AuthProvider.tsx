@@ -50,17 +50,56 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     initAuth();
   }, [navigate]);
 
+  const refreshAccessToken = async () => {
+    try {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        console.warn('[AuthProvider] No refreshToken found in localStorage.');
+        throw new Error('No refresh token available');
+      }
+
+      const response = await authService.refreshAccessToken({ refreshToken });
+      if (response.data.accessToken) {
+        localStorage.setItem('authToken', response.data.accessToken);
+        console.log('[AuthProvider] Access token refreshed and stored.');
+      } else {
+        console.warn('[AuthProvider] No accessToken received in refresh response.');
+      }
+    } catch (err) {
+      console.error('[AuthProvider] Failed to refresh access token:', err);
+      setUser(null); // Log out user on failure
+      throw err;
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshAccessToken().catch((err) => {
+        console.warn('[AuthProvider] Token refresh failed during interval:', err);
+      });
+    }, 15 * 60 * 1000); // Refresh every 15 minutes
+
+    return () => clearInterval(interval);
+  }, []);
+
   const login = async (data: LoginRequest) => {
     console.log('[AuthProvider] Login function started.');
     try {
       const response = await authService.login(data); // Call login API
 
-      // Store token securely in localStorage
+      // Store tokens securely in localStorage
       if (response.data.accessToken) {
         localStorage.setItem('authToken', response.data.accessToken);
-        console.log('[AuthProvider] Token stored in localStorage.');
+        console.log('[AuthProvider] Access token stored in localStorage.');
       } else {
         console.warn('[AuthProvider] No accessToken received in login response.');
+      }
+
+      if (response.data.refreshToken) {
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+        console.log('[AuthProvider] Refresh token stored in localStorage.');
+      } else {
+        console.warn('[AuthProvider] No refreshToken received in login response.');
       }
 
       const userData = await authService.getCurrentUser(); // Fetch user data
