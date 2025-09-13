@@ -23,8 +23,8 @@
     0 20px 40px rgba(0, 0, 0, 0.15),
     0 8px 16px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 600px;
-  max-height: 90vh;
+  max-width: 800px; // Wider on desktop
+  max-height: 85vh; // Reduced height
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -272,9 +272,11 @@
   }
 
   .modal {
-    max-height: 95vh;
+    max-height: 80vh; // Reduced height on mobile for better usability
     border-radius: v.$radius-lg v.$radius-lg 0 0;
     animation: modalSlideUp 0.3s ease-out;
+    max-width: 100%;
+    width: 100%;
   }
 
   .header {
@@ -290,19 +292,30 @@
   }
 
   .content {
-    min-height: 250px;
+    min-height: 200px; // Reduced minimum height
+    padding: 0;
+  }
+
+  .commentsList {
+    padding: 0;
+  }
+
+  .formContainer {
+    padding: v.$space-md v.$space-lg;
   }
 }
 
 @media (max-width: 480px) {
   .backdrop {
-    padding: 0;
+    padding: v.$space-xs;
+    align-items: flex-end;
   }
 
   .modal {
-    max-height: 100vh;
-    border-radius: 0;
-    height: 100vh;
+    max-height: 75vh; // Even more reduced on small screens
+    border-radius: v.$radius-md v.$radius-md 0 0;
+    max-width: 100%;
+    width: 100%;
   }
 
   .header {
@@ -311,6 +324,14 @@
 
   .postInfo {
     padding: v.$space-md;
+  }
+
+  .formContainer {
+    padding: v.$space-md;
+  }
+
+  .content {
+    min-height: 180px;
   }
 }
 

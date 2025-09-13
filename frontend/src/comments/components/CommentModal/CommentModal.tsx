@@ -42,19 +42,22 @@ export const CommentModal: React.FC<CommentModalProps> = ({
       }
     };
 
-    const handleClickOutside = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node;
+      if (modalRef.current && !modalRef.current.contains(target)) {
         onClose();
       }
     };
 
     document.addEventListener('keydown', handleEscape);
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside); // Add touch support
     document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
       document.body.style.overflow = 'unset';
     };
   }, [isOpen, onClose]);
@@ -86,13 +89,22 @@ export const CommentModal: React.FC<CommentModalProps> = ({
   if (!isOpen) return null;
 
   const modalContent = (
-    <div className={styles.backdrop}>
+    <div 
+      className={styles.backdrop}
+      onClick={(e) => {
+        // Close modal when clicking/tapping the backdrop
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+    >
       <div 
         ref={modalRef}
         className={styles.modal}
         role="dialog"
         aria-modal="true"
         aria-labelledby="comment-modal-title"
+        onClick={(e) => e.stopPropagation()} // Prevent backdrop click when clicking inside modal
       >
         <div className={styles.header}>
           <div className={styles.title}>

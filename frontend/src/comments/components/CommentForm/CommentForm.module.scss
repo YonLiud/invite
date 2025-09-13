@@ -158,6 +158,8 @@
   .textarea {
     font-size: 0.85rem;
     padding: v.$space-xs v.$space-sm;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .footer {
@@ -170,6 +172,7 @@
     order: 2;
     align-self: flex-start;
     gap: v.$space-sm;
+    width: 100%;
   }
 
   .submitButton {
@@ -185,6 +188,20 @@
 @media (max-width: 480px) {
   .commentForm {
     padding: v.$space-sm;
+    gap: v.$space-xs;
+  }
+
+  .inputContainer {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .charCount {
@@ -194,5 +211,19 @@
   .footer {
     margin-top: v.$space-xs;
     padding-top: v.$space-xs;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: v.$space-xs;
+  }
+
+  .info {
+    justify-content: space-between;
+    width: 100%;
+    order: 2;
+  }
+
+  .submitButton {
+    order: 1;
+    width: 100%;
   }
 }

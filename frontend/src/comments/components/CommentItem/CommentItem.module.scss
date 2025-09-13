@@ -167,12 +167,12 @@
   }
 
   .displayName {
-    max-width: 80px;
+    max-width: 100px;
     font-size: 0.8rem;
   }
 
   .username {
-    max-width: 70px;
+    max-width: 80px;
     font-size: 0.75rem;
   }
 
@@ -186,6 +186,8 @@
 
   .commentText {
     font-size: 0.85rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .menuButton {
@@ -198,12 +200,29 @@
 @media (max-width: 480px) {
   .commentItem {
     padding: v.$space-sm;
+    gap: v.$space-xs;
+  }
+
+  .content {
+    width: 100%;
+    min-width: 0;
   }
 
   .authorInfo {
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
+    width: 100%;
+  }
+
+  .displayName {
+    max-width: none;
+    width: 100%;
+  }
+
+  .username {
+    max-width: none;
+    width: 100%;
   }
 
   .separator {
@@ -213,10 +232,21 @@
   .header {
     flex-direction: column;
     gap: v.$space-xs;
+    align-items: flex-start;
   }
 
   .menuWrapper {
     align-self: flex-end;
     margin-left: 0;
+    position: absolute;
+    top: v.$space-sm;
+    right: v.$space-sm;
+  }
+
+  .commentText {
+    margin-top: v.$space-xs;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
   }
 }

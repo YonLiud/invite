@@ -2,12 +2,59 @@ import axios from 'axios';
 import * as authService from '@/auth/services/AuthService';
 import type { RefreshResponse } from '@/types/auth';
 
+// Function to determine the appropriate API base URL
+const getApiBaseUrl = (): string => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  
+  // If no env URL is set, use default
+  if (!envUrl) {
+    return 'http://192.168.1.119:3000';
+  }
+  
+  // If we're on HTTPS and the API URL is HTTP, we have a mixed content issue
+  if (window.location.protocol === 'https:' && envUrl.startsWith('http://')) {
+    console.warn('Mixed content detected: Frontend is HTTPS but API is HTTP');
+    console.warn('Consider setting up HTTPS for your API or using a reverse proxy');
+    
+    // For development, you might want to try HTTPS version
+    // but in production, this should be properly configured
+    const httpsUrl = envUrl.replace('http://', 'https://');
+    console.log(`Attempting HTTPS API URL: ${httpsUrl}`);
+    return httpsUrl;
+  }
+  
+  return envUrl;
+};
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://192.168.1.119:3000',
-  timeout: 10000,
-  withCredentials: true,
-});
+// Create a fallback mechanism for mixed content issues
+const createApiInstance = () => {
+  const baseURL = getApiBaseUrl();
+  
+  const instance = axios.create({
+    baseURL,
+    timeout: 10000,
+    withCredentials: true,
+  });
+  
+  // Add an interceptor to handle mixed content errors
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      // If we get a network error and we're using HTTPS API with HTTP fallback
+      if (error.code === 'ERR_NETWORK' && baseURL.startsWith('https://')) {
+        const httpUrl = baseURL.replace('https://', 'http://');
+        console.warn(`HTTPS API failed, this might be due to mixed content policy`);
+        console.warn(`Original URL: ${baseURL}`);
+        console.warn(`Consider using: ${httpUrl} in development or setting up proper HTTPS`);
+      }
+      return Promise.reject(error);
+    }
+  );
+  
+  return instance;
+};
+
+const api = createApiInstance();
 
 let isRefreshing = false;
 let failedQueue: any[] = [];

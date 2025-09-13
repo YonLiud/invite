@@ -17,10 +17,16 @@
 
   min-height: 180px;
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     padding: v.$space-md;
     min-height: 120px;
     border-radius: v.$radius-sm;
+  }
+
+  @media (max-width: 480px) {
+    padding: v.$space-sm;
+    min-height: 100px;
+    border-radius: v.$radius-xs;
   }
 
   // Base subtle elevation

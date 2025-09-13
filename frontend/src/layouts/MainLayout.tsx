@@ -4,6 +4,7 @@ import Logo from '@/ui/Logo/Logo';
 import ProfilePicture from '@/ui/ProfilePicture/ProfilePicture';
 import MenuWrapper, { type MenuOption } from "../ui/MenuWrapper";
 import { UserPen, LogOut } from "lucide-react";
+import styles from './MainLayout.module.scss';
 
 const MainLayout = () => {
   const { user, logout } = useAuth();
@@ -57,44 +58,33 @@ const MainLayout = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '95vh' }}>
+    <div className={styles.mainLayout}>
       {/* Header */}
-      <header style={{
-        padding: '1rem',
-        borderBottom: '1px solid #e0e0e0',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Logo />
-        </Link>
-        <div>
+      <header className={styles.header}>
+        <div className={styles.headerLeft}>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Logo />
+          </Link>
+        </div>
+        <div className={styles.headerRight}>
           {user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <MenuWrapper options={options}>
+            <div className={styles.userSection}>
+              <MenuWrapper options={options} position="bottom-left">
                 <ProfilePicture name={user.display_name || user.username} size={40} />
               </MenuWrapper>
             </div>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link to="/login" className={styles.loginLink}>Login</Link>
           )}
         </div>
       </header>
 
-      <main style={{ flex: 1, padding: '1rem' }}>
+      <main className={styles.main}>
         <Outlet />
       </main>
 
-      <footer style={{
-        padding: '1rem',
-        borderTop: '1px solid #e0e0e0',
-        textAlign: 'center',
-        fontSize: '0.8rem',
-        color: '#666',
-        userSelect: 'none'
-      }}>
-        <p>© {new Date().getFullYear()} Invite</p>
+      <footer className={styles.footer}>
+        <p className={styles.footerText}>© {new Date().getFullYear()} Invite</p>
       </footer>
     </div>
   );

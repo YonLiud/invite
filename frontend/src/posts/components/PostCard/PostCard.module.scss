@@ -172,11 +172,11 @@
   }
 
   .displayName {
-    max-width: 100px;
+    max-width: 120px;
   }
 
   .username {
-    max-width: 80px;
+    max-width: 100px;
   }
 
   .actions {
@@ -188,6 +188,65 @@
     
     .count {
       font-size: 0.75rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    gap: v.$space-sm;
+    align-items: flex-start;
+  }
+
+  .authorInfo {
+    width: 100%;
+  }
+
+  .authorDetails {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+  }
+
+  .displayName {
+    max-width: none;
+    width: 100%;
+  }
+
+  .username {
+    max-width: none;
+    width: 100%;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .menuWrapper {
+    align-self: flex-end;
+    position: absolute;
+    top: v.$space-md;
+    right: v.$space-md;
+  }
+
+  .content {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .actions {
+    gap: v.$space-sm;
+    flex-wrap: wrap;
+  }
+
+  .actionButton {
+    padding: v.$space-xs v.$space-sm;
+    min-width: 60px;
+    
+    .count {
+      font-size: 0.7rem;
     }
   }
 }
