@@ -11,12 +11,14 @@ interface CommentModalProps {
   postId: number;
   isOpen: boolean;
   onClose: () => void;
+  onCommentAdded?: (comment: Comment) => void;
 }
 
 export const CommentModal: React.FC<CommentModalProps> = ({
   postId,
   isOpen,
-  onClose
+  onClose,
+  onCommentAdded
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const { 
@@ -72,6 +74,7 @@ export const CommentModal: React.FC<CommentModalProps> = ({
 
   const handleCommentAdded = (newComment: Comment) => {
     addComment(newComment);
+    onCommentAdded?.(newComment);
   };
 
   const handleLoadMore = () => {

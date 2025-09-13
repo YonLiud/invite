@@ -4,6 +4,6 @@ export interface Post {
   id: number;
   content: string;
   author: Profile;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }

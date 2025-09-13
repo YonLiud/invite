@@ -50,6 +50,7 @@
   display: flex;
   align-items: center;
   gap: v.$space-sm;
+  user-select: none;
 }
 
 .titleIcon {
@@ -96,6 +97,7 @@
   font-weight: 600;
   color: v.$color-text;
   font-size: 0.9rem;
+  user-select: none;
 }
 
 .postDate {

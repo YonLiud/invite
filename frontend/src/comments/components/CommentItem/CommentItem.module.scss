@@ -55,6 +55,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 120px;
+  user-select: none;
 }
 
 .username {
@@ -64,6 +65,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100px;
+  user-select: none;
 }
 
 .separator {
