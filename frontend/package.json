@@ -31,5 +31,13 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
     "vite": "^7.1.2"
-  }
+  },
+  "licenses": [
+    {
+      name": "Lucide",
+      "url": "https://lucide.dev",
+      "license": "ISC/MIT",
+      "copyright": "Lucide Contributors"
+    }
+  ]
 }
