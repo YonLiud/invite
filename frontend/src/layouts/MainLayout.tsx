@@ -72,7 +72,7 @@ const MainLayout = () => {
         <div>
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <MenuWrapper options={options} trigger='click'>
+              <MenuWrapper options={options}>
                 <ProfilePicture name={user.display_name || user.username} size={40} />
               </MenuWrapper>
             </div>
