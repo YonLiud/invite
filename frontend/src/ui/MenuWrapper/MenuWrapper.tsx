@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./MenuWrapper.module.scss";
 
 export interface MenuOption {
@@ -28,17 +28,32 @@ const MenuWrapper: React.FC<MenuWrapperProps> = ({
 	trigger = "hover"
 }) => {
 	const [isVisible, setIsVisible] = useState(false);
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-	const handleMouseEnter = () => {
+	const showMenu = () => {
 		if (trigger === "hover" && !disabled) {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+				timeoutRef.current = null;
+			}
 			setIsVisible(true);
 		}
 	};
 
-	const handleMouseLeave = () => {
+	const hideMenu = () => {
 		if (trigger === "hover") {
-			setIsVisible(false);
+			timeoutRef.current = setTimeout(() => {
+				setIsVisible(false);
+			}, 150); // Small delay to allow moving to menu
 		}
+	};
+
+	const handleMouseEnter = () => {
+		showMenu();
+	};
+
+	const handleMouseLeave = () => {
+		hideMenu();
 	};
 
 	const handleClick = () => {
@@ -55,6 +70,15 @@ const MenuWrapper: React.FC<MenuWrapperProps> = ({
 			setIsVisible(false);
 		}
 	};
+
+	// Cleanup timeout on unmount
+	useEffect(() => {
+		return () => {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+			}
+		};
+	}, []);
 
 	const wrapperClasses = [
 		styles.wrapper,
@@ -77,7 +101,11 @@ const MenuWrapper: React.FC<MenuWrapperProps> = ({
 		>
 			{children}
 			{!disabled && (
-				<div className={menuClasses}>
+				<div 
+					className={menuClasses}
+					onMouseEnter={showMenu}
+					onMouseLeave={hideMenu}
+				>
 					<div className={styles.menuContent}>
 						{options.map((option) => (
 							<button

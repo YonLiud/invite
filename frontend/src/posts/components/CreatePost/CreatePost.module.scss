@@ -1,0 +1,201 @@
+@use "../../../styles/_variables.scss" as v;
+
+.createPost {
+  border: 2px solid v.$color-border;
+  transition: 
+    border-color v.$transition,
+    box-shadow v.$transition;
+
+  &.focused {
+    border-color: v.$color-primary;
+    box-shadow: 0 0 0 3px v.$color-focus-ring;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: v.$space-sm;
+}
+
+.inputContainer {
+  flex: 1;
+  min-width: 0;
+}
+
+.textArea {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: v.$font-primary;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: v.$color-text;
+  background: transparent;
+  padding: v.$space-sm 0;
+  min-height: 24px;
+  
+  &::placeholder {
+    color: v.$color-text-muted;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.textAreaError {
+    color: v.$color-error;
+  }
+}
+
+.error {
+  color: v.$color-error;
+  font-size: 0.85rem;
+  margin-top: v.$space-xs;
+  font-weight: 500;
+}
+
+.expandedContent {
+  margin-top: v.$space-md;
+  padding-top: v.$space-md;
+  border-top: 1px solid v.$color-border-light;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: v.$space-sm;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+}
+
+.toolbarButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: v.$radius-sm;
+  color: v.$color-text-muted;
+  cursor: pointer;
+  transition: 
+    background-color v.$transition-fast,
+    color v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background: v.$color-hover-bg;
+    color: v.$color-primary;
+  }
+
+  &:focus-visible {
+    outline: none;
+    background: v.$color-hover-bg;
+    box-shadow: 0 0 0 2px v.$color-focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.submitSection {
+  display: flex;
+  align-items: center;
+  gap: v.$space-md;
+}
+
+.characterCount {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: v.$color-text-muted;
+
+  .warning {
+    color: v.$color-warning;
+    font-weight: 600;
+  }
+
+  .error {
+    color: v.$color-error;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.maxLength {
+  color: v.$color-text-muted;
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  white-space: nowrap;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  font-size: 0.75rem;
+  color: v.$color-text-muted;
+  justify-content: center;
+
+  kbd {
+    background: v.$color-border-light;
+    border: 1px solid v.$color-border;
+    border-radius: v.$radius-sm;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    font-family: v.$font-mono;
+    color: v.$color-text;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    gap: v.$space-sm;
+    align-items: stretch;
+  }
+
+  .submitSection {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+
+  .hint {
+    font-size: 0.7rem;
+  }
+}
+
+// Animation for smooth transitions
+.expandedContent {
+  animation: fadeInUp 0.2s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

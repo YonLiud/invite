@@ -1,0 +1,97 @@
+@use "../../styles/_variables.scss" as v;
+
+.home {
+  min-height: 100vh;
+  background: v.$color-bg;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: v.$space-lg v.$space-md;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: v.$space-xxl;
+  padding: v.$space-lg 0;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 v.$space-sm 0;
+  background: v.$gradient-accent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: v.$color-text; // Fallback for browsers that don't support background-clip
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: v.$color-text-muted;
+  margin: 0;
+  font-weight: 400;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-xxl;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .container {
+    padding: v.$space-md v.$space-sm;
+    max-width: 100%;
+  }
+
+  .header {
+    margin-bottom: v.$space-xl;
+    padding: v.$space-md 0;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .content {
+    gap: v.$space-xl;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: v.$space-sm;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+// Animation for smooth page load
+.home {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
