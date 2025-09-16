@@ -49,7 +49,7 @@ The API is built using Node.js with TypeScript, the Express.js framework, and Po
 > [!NOTE]
 > To run the PostgreSQL database using Docker, you can use the following command:
 > ```bash
-> docker run --name invite-db POSTGRES_USER=your_username -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=invite_db -p 5432:5432 -d postgres:15
+> docker run --name invite-db POSTGRES_USER=your_username -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=invite_db -p 5432:5432 -d postgres
 > ```
 
 The server will start on `http://localhost:3000` as default.
