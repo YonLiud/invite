@@ -66,4 +66,5 @@ AppDataSource.initialize()
   })
   .catch((err) => {
     logger.error("Error during Data Source initialization:", err);
+    process.exit(1);
   });
