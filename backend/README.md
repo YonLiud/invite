@@ -17,7 +17,42 @@ The API is built using Node.js with TypeScript, the Express.js framework, and Po
 
 ## How to Run
 
-<!-- TODO -->
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/YonLiud/invite.git
+    ```
+2. Navigate to the `backend` directory:
+    ```bash
+    cd invite/backend
+    ```
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
+4. Set up environment variables:
+    Create a `.env` file in the `backend` directory and add the following variables:
+    ```env
+    NODE_ENV=
+    DB_HOST=
+    DB_PORT=
+    DB_USERNAME=
+    DB_PASSWORD=
+    DB_NAME=
+    JWT_SECRET=
+    ```
+5. Initialize the database:
+    Ensure you have PostgreSQL installed and running. Create a database with the name specified in your `.env` file.
+6. Run the server:
+    ```bash
+    npm run dev
+    ```
+> [!NOTE]
+> To run the PostgreSQL database using Docker, you can use the following command:
+> ```bash
+> docker run --name invite-db POSTGRES_USER=your_username -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=invite_db -p 5432:5432 -d postgres:15
+> ```
+
+The server will start on `http://localhost:3000` as default.
 
 ## Testing
 
