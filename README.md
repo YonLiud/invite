@@ -1,8 +1,14 @@
 # invite
 
-<!-- TODO -->
+A modern social media application built with React and Node.js. Users can create posts, comment, like content, and manage their profiles. Features JWT authentication, a RESTful API with PostgreSQL database, and a responsive frontend interface.
 
-## Docker
+## Demo
+Screenshots are available in the `demo` folder.
+
+### Video Demo
+
+
+### Run with Docker
 
 Dockerfiles for both the backend and frontend are provided.
 I have also included a `docker-compose.yml` file to orchestrate both services.
