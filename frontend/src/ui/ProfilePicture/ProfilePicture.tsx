@@ -20,15 +20,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ name, size = 100 }) => 
       style={{
         width: size,
         height: size,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '8px', // Optional: Add rounded corners
         fontSize: size / 2.5,
-        fontWeight: 'bold',
-        color: 'white',
-        textTransform: 'uppercase',
-        userSelect: 'none',
       }}
     >
       {initials}
