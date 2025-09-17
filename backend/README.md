@@ -54,6 +54,31 @@ The API is built using Node.js with TypeScript, the Express.js framework, and Po
 
 The server will start on `http://localhost:3000` as default.
 
+## Docker
+
+You can run the backend using Docker. Make sure to provide all required environment variables:
+
+### Build the Docker image:
+```bash
+docker build \
+  --build-arg DATABASE_URL=postgresql://username:password@host:5432/dbname \
+  --build-arg DATABASE_PORT=5432 \
+  --build-arg DATABASE_NAME=invite_db \
+  --build-arg DATABASE_USER=your_username \
+  --build-arg DATABASE_PASSWORD=your_password \
+  --build-arg JWT_SECRET=your_jwt_secret \
+  --build-arg JWT_REFRESH_SECRET=your_refresh_secret \
+  -t invite-backend .
+```
+
+### Run the container:
+```bash
+docker run -p 3001:3001 invite-backend
+```
+
+> [!NOTE]
+> All environment variables are required. The build will fail if any are missing.
+
 ## Testing
 
 <!-- TODO -->
