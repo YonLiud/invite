@@ -24,7 +24,6 @@ services:
       context: ./frontend
       args:
         - VITE_API_URL=${VITE_API_URL}
-        - VITE_APP_TITLE=${VITE_APP_TITLE}
     ports:
       - "${FRONTEND_PORT}:80"
     depends_on:
