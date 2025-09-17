@@ -25,7 +25,3 @@ COPY . .
 RUN npm run build
 EXPOSE 3001
 CMD ["npm", "start"]
-
-# To build and run the Docker image, use the following commands:
-    # docker build -t inviteBackend .
-    # docker run -p 3001:3001 inviteBackend
