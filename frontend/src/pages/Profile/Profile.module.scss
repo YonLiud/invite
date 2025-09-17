@@ -1,0 +1,31 @@
+.profilePage {
+  padding: 2rem;
+  background-color: #f9f9f9;
+}
+
+.profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.settingsButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.settingsButton:hover {
+  color: #000;
+}
+
+.profileContent {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}

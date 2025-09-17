@@ -1,0 +1,252 @@
+@use "../../../styles/_variables.scss" as v;
+
+.postCard {
+  border: 1px solid v.$color-border;
+  transition: border-color v.$transition-fast;
+
+  &:hover {
+    border-color: v.$color-border-accent;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: v.$space-md;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: v.$space-sm;
+  flex: 1;
+}
+
+.authorDetails {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  flex-wrap: wrap;
+  min-width: 0; // Allow text to truncate
+  user-select: none;
+}
+
+.displayName {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: v.$color-text;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.username {
+  font-size: 0.85rem;
+  color: v.$color-text-muted;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.separator {
+  color: v.$color-text-muted;
+  font-size: 0.8rem;
+}
+
+.timestamp {
+  font-size: 0.85rem;
+  color: v.$color-text-muted;
+  white-space: nowrap;
+}
+
+.menuWrapper {
+  flex-shrink: 0;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: v.$radius-sm;
+  color: v.$color-text-muted;
+  cursor: pointer;
+  transition: 
+    background-color v.$transition-fast,
+    color v.$transition-fast;
+
+  &:hover {
+    background: v.$color-hover-bg;
+    color: v.$color-text;
+  }
+
+  &:focus-visible {
+    outline: none;
+    background: v.$color-hover-bg;
+    box-shadow: 0 0 0 2px v.$color-focus-ring;
+  }
+}
+
+.content {
+  margin-bottom: v.$space-lg;
+}
+
+.postText {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: v.$color-text;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: v.$space-lg;
+  padding-top: v.$space-sm;
+  border-top: 1px solid v.$color-border-light;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  padding: v.$space-xs v.$space-sm;
+  border: none;
+  background: transparent;
+  border-radius: v.$radius-sm;
+  color: v.$color-text-muted;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 
+    background-color v.$transition-fast,
+    color v.$transition-fast,
+    transform v.$transition-fast;
+
+  &:hover {
+    background: v.$color-hover-bg;
+    color: v.$color-text;
+    transform: scale(1.02);
+  }
+
+  &:focus-visible {
+    outline: none;
+    background: v.$color-hover-bg;
+    box-shadow: 0 0 0 2px v.$color-focus-ring;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.liked {
+    color: v.$color-error;
+
+    &:hover {
+      color: v.$color-error;
+      background: rgba(v.$color-error, 0.1);
+    }
+  }
+}
+
+.count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 16px;
+  text-align: center;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .authorDetails {
+    flex-wrap: wrap;
+  }
+
+  .displayName {
+    max-width: 120px;
+  }
+
+  .username {
+    max-width: 100px;
+  }
+
+  .actions {
+    gap: v.$space-md;
+  }
+
+  .actionButton {
+    padding: v.$space-xs;
+    
+    .count {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    gap: v.$space-sm;
+    align-items: flex-start;
+  }
+
+  .authorInfo {
+    width: 100%;
+  }
+
+  .authorDetails {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+  }
+
+  .displayName {
+    max-width: none;
+    width: 100%;
+  }
+
+  .username {
+    max-width: none;
+    width: 100%;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .menuWrapper {
+    align-self: flex-end;
+    position: absolute;
+    top: v.$space-md;
+    right: v.$space-md;
+  }
+
+  .content {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .actions {
+    gap: v.$space-sm;
+    flex-wrap: wrap;
+  }
+
+  .actionButton {
+    padding: v.$space-xs v.$space-sm;
+    min-width: 60px;
+    
+    .count {
+      font-size: 0.7rem;
+    }
+  }
+}

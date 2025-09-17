@@ -1,0 +1,66 @@
+@use '../../styles/_variables.scss' as v;
+
+.input {
+  width: 100%;
+  padding: v.$space-sm v.$space-md;
+  font-family: v.$font-primary;
+  font-size: 1rem;
+  border: 2px solid v.$color-border;
+  border-radius: v.$radius-sm;
+  background: v.$color-bg;
+  color: v.$color-text;
+  transition:
+    border-color v.$transition-fast,
+    box-shadow v.$transition,
+    filter v.$transition-fast;
+  outline: none;
+
+  &::placeholder {
+    color: v.$color-text-muted;
+    opacity: 1;
+  }
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: v.$color-text-muted;
+  }
+
+  &:focus {
+    border-color: v.$gradient-end;
+    box-shadow:
+      0 0 0 2px v.$color-focus-ring,
+      0 0 8px 0 v.$gradient-end;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: v.$color-hover-bg;
+  }
+
+  // Error State
+  &--error {
+    border-color: v.$color-error;
+
+    &:focus {
+      box-shadow:
+        0 0 0 2px v.$color-focus-ring,
+        0 0 8px 0 v.$color-error;
+    }
+  }
+
+  // Sizes
+  &--sm {
+    padding: v.$space-xs v.$space-sm;
+    font-size: 0.875rem;
+  }
+
+  &--md {
+    padding: v.$space-sm v.$space-md;
+    font-size: 1rem;
+  }
+
+  &--lg {
+    padding: v.$space-md v.$space-lg;
+    font-size: 1.125rem;
+  }
+}

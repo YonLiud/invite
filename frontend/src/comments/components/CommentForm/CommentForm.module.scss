@@ -1,0 +1,229 @@
+@use "../../../styles/_variables.scss" as v;
+
+.commentForm {
+  display: flex;
+  gap: v.$space-sm;
+  padding: v.$space-md v.$space-lg;
+  border-top: 1px solid v.$color-border-light;
+  background: v.$color-white;
+  transition: all v.$transition;
+
+  &.expanded {
+    background: v.$color-bg-secondary;
+    box-shadow: inset 0 1px 0 0 v.$color-border-light;
+  }
+}
+
+.avatar {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.inputContainer {
+  flex: 1;
+  min-width: 0;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 36px;
+  max-height: 120px;
+  padding: v.$space-sm v.$space-md;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+  font-family: inherit;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: v.$color-text;
+  background: v.$color-white;
+  resize: none;
+  overflow-y: auto;
+  transition: 
+    border-color v.$transition-fast,
+    box-shadow v.$transition-fast;
+
+  &::placeholder {
+    color: v.$color-text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-primary;
+    box-shadow: 0 0 0 2px v.$color-focus-ring;
+  }
+
+  &:disabled {
+    background: v.$color-bg-disabled;
+    cursor: not-allowed;
+  }
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: v.$color-border;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: v.$color-text-muted;
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: v.$space-sm;
+  padding-top: v.$space-sm;
+  animation: slideInFooter 0.2s ease-out;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: v.$space-md;
+}
+
+.charCount {
+  font-size: 0.75rem;
+  color: v.$color-text-muted;
+
+  &.warning {
+    color: v.$color-warning;
+  }
+
+  &.error {
+    color: v.$color-danger;
+  }
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: v.$color-text-muted;
+  font-style: italic;
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  transition: all v.$transition-fast;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+// Animations
+@keyframes slideInFooter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Character count color states
+.commentForm:has(.textarea) {
+  .charCount {
+    &[data-count*="45"]:not([data-count*="4"]) {
+      color: v.$color-warning;
+    }
+    
+    &[data-count*="49"],
+    &[data-count*="50"] {
+      color: v.$color-danger;
+      font-weight: 600;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .commentForm {
+    padding: v.$space-sm v.$space-md;
+    gap: v.$space-xs;
+  }
+
+  .textarea {
+    font-size: 0.85rem;
+    padding: v.$space-xs v.$space-sm;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: v.$space-xs;
+  }
+
+  .info {
+    order: 2;
+    align-self: flex-start;
+    gap: v.$space-sm;
+    width: 100%;
+  }
+
+  .submitButton {
+    order: 1;
+    align-self: flex-end;
+  }
+
+  .hint {
+    display: none; // Hide keyboard shortcut hint on mobile
+  }
+}
+
+@media (max-width: 480px) {
+  .commentForm {
+    padding: v.$space-sm;
+    gap: v.$space-xs;
+  }
+
+  .inputContainer {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .charCount {
+    font-size: 0.7rem;
+  }
+
+  .footer {
+    margin-top: v.$space-xs;
+    padding-top: v.$space-xs;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: v.$space-xs;
+  }
+
+  .info {
+    justify-content: space-between;
+    width: 100%;
+    order: 2;
+  }
+
+  .submitButton {
+    order: 1;
+    width: 100%;
+  }
+}
