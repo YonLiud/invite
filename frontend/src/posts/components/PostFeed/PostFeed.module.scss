@@ -1,0 +1,199 @@
+@use "../../../styles/_variables.scss" as v;
+
+.postFeed {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-lg;
+  width: 100%;
+}
+
+.centerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: v.$space-xxl;
+  text-align: center;
+}
+
+.loadingText {
+  margin-top: v.$space-md;
+  color: v.$color-text-muted;
+  font-size: 0.9rem;
+}
+
+.errorContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$space-md;
+  max-width: 400px;
+}
+
+.errorIcon {
+  color: v.$color-error;
+}
+
+.errorTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: v.$color-text;
+}
+
+.errorMessage {
+  margin: 0;
+  color: v.$color-text-muted;
+  line-height: 1.5;
+}
+
+.retryButton {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+}
+
+.emptyState {
+  max-width: 400px;
+}
+
+.emptyTitle {
+  margin: 0 0 v.$space-sm 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: v.$color-text;
+}
+
+.emptyMessage {
+  margin: 0;
+  color: v.$color-text-muted;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: v.$space-sm;
+  padding: v.$space-sm v.$space-md;
+  background: rgba(v.$color-error, 0.1);
+  border: 1px solid rgba(v.$color-error, 0.2);
+  border-radius: v.$radius-md;
+  color: v.$color-error;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.dismissButton {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: v.$color-error;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: v.$radius-sm;
+  transition: background-color v.$transition-fast;
+
+  &:hover {
+    background: rgba(v.$color-error, 0.1);
+  }
+}
+
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-lg;
+}
+
+.postCard {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.loadMoreSection {
+  display: flex;
+  justify-content: center;
+  padding: v.$space-lg 0;
+}
+
+.loadMoreButton {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  min-width: 160px;
+}
+
+.endMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$space-sm;
+  padding: v.$space-xl 0;
+  text-align: center;
+  color: v.$color-text-muted;
+  border-top: 1px solid v.$color-border-light;
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.refreshButton {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+}
+
+.stats {
+  text-align: center;
+  padding: v.$space-md 0;
+  color: v.$color-text-muted;
+  font-size: 0.85rem;
+  border-top: 1px solid v.$color-border-light;
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .postFeed {
+    gap: v.$space-md;
+  }
+
+  .centerContent {
+    padding: v.$space-xl v.$space-md;
+  }
+
+  .errorContent {
+    gap: v.$space-sm;
+  }
+
+  .postsContainer {
+    gap: v.$space-md;
+  }
+
+  .loadMoreSection {
+    padding: v.$space-md 0;
+  }
+
+  .endMessage {
+    padding: v.$space-lg 0;
+  }
+}

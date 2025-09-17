@@ -1,0 +1,357 @@
+@use "../../../styles/_variables.scss" as v;
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: v.$z-modal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: v.$space-md;
+  animation: backdropFadeIn 0.2s ease-out;
+}
+
+.modal {
+  background: v.$color-bg;
+  border-radius: v.$radius-lg;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; // Wider on desktop
+  max-height: 85vh; // Reduced height
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease-out;
+  border: 1px solid v.$color-border;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: v.$space-lg v.$space-xl;
+  border-bottom: 1px solid v.$color-border-light;
+  background: v.$color-bg;
+  flex-shrink: 0;
+}
+
+.titleSection {
+  display: flex;
+  align-items: center;
+  gap: v.$space-sm;
+  user-select: none;
+}
+
+.titleIcon {
+  color: v.$color-primary;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: v.$color-text;
+}
+
+.closeButton {
+  flex-shrink: 0;
+  border-radius: v.$radius-full;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  
+  &:hover {
+    background: v.$color-hover-bg;
+  }
+}
+
+.postInfo {
+  padding: v.$space-lg v.$space-xl;
+  border-bottom: 1px solid v.$color-border-light;
+  background: v.$color-border-light;
+  flex-shrink: 0;
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  gap: v.$space-sm;
+  margin-bottom: v.$space-sm;
+}
+
+.authorName {
+  font-weight: 600;
+  color: v.$color-text;
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.postDate {
+  color: v.$color-text-muted;
+  font-size: 0.85rem;
+}
+
+.postContent {
+  margin: 0;
+  color: v.$color-text;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: v.$space-xl;
+  gap: v.$space-md;
+  color: v.$color-text-muted;
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid v.$color-border;
+  border-top: 2px solid v.$color-primary;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: v.$space-xl;
+  gap: v.$space-md;
+  color: v.$color-danger;
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.retryButton {
+  padding: v.$space-sm v.$space-md;
+  border: 1px solid v.$color-danger;
+  background: transparent;
+  color: v.$color-danger;
+  border-radius: v.$radius-sm;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 
+    background-color v.$transition-fast,
+    color v.$transition-fast;
+
+  &:hover {
+    background: v.$color-danger;
+    color: v.$color-white;
+  }
+}
+
+.commentsList {
+  min-height: 200px;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: v.$space-xl;
+  gap: v.$space-md;
+  color: v.$color-text-muted;
+  text-align: center;
+
+  svg {
+    opacity: 0.5;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: v.$color-text;
+  }
+
+  span {
+    font-size: 0.85rem;
+    color: v.$color-text-muted;
+  }
+}
+
+.loadMoreContainer {
+  padding: v.$space-md v.$space-lg;
+  text-align: center;
+  border-top: 1px solid v.$color-border-light;
+}
+
+.loadMoreButton {
+  padding: v.$space-sm v.$space-md;
+  border: 1px solid v.$color-border;
+  background: v.$color-white;
+  color: v.$color-text;
+  border-radius: v.$radius-sm;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 
+    background-color v.$transition-fast,
+    border-color v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background: v.$color-hover-bg;
+    border-color: v.$color-primary;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Animations
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .backdrop {
+    padding: v.$space-sm;
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-height: 80vh; // Reduced height on mobile for better usability
+    border-radius: v.$radius-lg v.$radius-lg 0 0;
+    animation: modalSlideUp 0.3s ease-out;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .header {
+    padding: v.$space-md v.$space-lg;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .postInfo {
+    padding: v.$space-md v.$space-lg;
+  }
+
+  .content {
+    min-height: 200px; // Reduced minimum height
+    padding: 0;
+  }
+
+  .commentsList {
+    padding: 0;
+  }
+
+  .formContainer {
+    padding: v.$space-md v.$space-lg;
+  }
+}
+
+@media (max-width: 480px) {
+  .backdrop {
+    padding: v.$space-xs;
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-height: 75vh; // Even more reduced on small screens
+    border-radius: v.$radius-md v.$radius-md 0 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .header {
+    padding: v.$space-md;
+  }
+
+  .postInfo {
+    padding: v.$space-md;
+  }
+
+  .formContainer {
+    padding: v.$space-md;
+  }
+
+  .content {
+    min-height: 180px;
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Focus management
+.modal {
+  &:focus-visible {
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.15),
+      0 8px 16px rgba(0, 0, 0, 0.1),
+      0 0 0 3px v.$color-focus-ring;
+  }
+}

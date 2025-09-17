@@ -1,0 +1,22 @@
+@use '../../styles/_variables.scss' as v;
+
+.logo {
+    font-family: v.$font-primary;
+    font-weight: 700;
+    font-size: 2.5rem;
+    background: v.$gradient-accent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.03em;
+    display: inline-block;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: default;
+
+}

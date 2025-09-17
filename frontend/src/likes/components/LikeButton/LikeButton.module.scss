@@ -1,0 +1,151 @@
+@use "../../../styles/_variables.scss" as v;
+
+.likeButton {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  padding: v.$space-xs v.$space-sm;
+  border: none;
+  background: transparent;
+  border-radius: v.$radius-sm;
+  color: v.$color-text-muted;
+  cursor: pointer;
+  transition: 
+    color v.$transition-fast,
+    background-color v.$transition-fast,
+    transform v.$transition-fast;
+  position: relative;
+
+  &:hover:not(.disabled) {
+    background: v.$color-hover-bg;
+    color: v.$color-text;
+  }
+
+  &:focus-visible {
+    outline: none;
+    background: v.$color-hover-bg;
+    box-shadow: 0 0 0 2px v.$color-focus-ring;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.liked {
+    color: v.$color-danger;
+
+    .heartIcon {
+      animation: heartBeat 0.6s ease-in-out;
+    }
+  }
+
+  &.animating {
+    .iconContainer {
+      position: relative;
+    }
+  }
+}
+
+.iconContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heartIcon {
+  transition: 
+    fill v.$transition-fast,
+    transform v.$transition-fast;
+}
+
+.count {
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-width: 16px;
+  text-align: left;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: v.$color-danger;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleBurst 0.6s ease-out forwards;
+  animation-delay: var(--delay);
+  transform: rotate(var(--angle)) translateY(0);
+  opacity: 0;
+}
+
+// Animations
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes particleBurst {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--angle)) translateY(0) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(var(--angle)) translateY(-12px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateY(-20px) scale(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .likeButton {
+    padding: v.$space-xs;
+  }
+
+  .count {
+    font-size: 0.8rem;
+  }
+
+  .heartIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .particle {
+    width: 3px;
+    height: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .likeButton {
+    padding: 2px v.$space-xs;
+  }
+
+  .count {
+    font-size: 0.75rem;
+  }
+
+  .heartIcon {
+    width: 14px;
+    height: 14px;
+  }
+}

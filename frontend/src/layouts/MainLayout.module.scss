@@ -1,0 +1,108 @@
+@use "../styles/_variables.scss" as v;
+
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.header {
+  padding: v.$space-md;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.headerLeft {
+  min-width: 0;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: v.$space-md;
+  flex-shrink: 0;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: v.$space-sm;
+}
+
+.main {
+  flex: 1;
+  padding: v.$space-md;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.footer {
+  padding: v.$space-md;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+  user-select: none;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footerText {
+  margin: 0;
+}
+
+.loginLink {
+  text-decoration: none;
+  color: v.$color-primary;
+  font-weight: 500;
+  padding: v.$space-xs v.$space-sm;
+  border-radius: v.$radius-sm;
+  transition: background-color v.$transition-fast;
+
+  &:hover {
+    background-color: v.$color-hover-bg;
+  }
+}
+
+// Mobile responsive styles
+@media (max-width: 768px) {
+  .header {
+    padding: v.$space-sm v.$space-md;
+  }
+
+  .main {
+    padding: v.$space-sm;
+  }
+
+  .footer {
+    padding: v.$space-sm v.$space-md;
+    font-size: 0.75rem;
+  }
+
+  .userSection {
+    gap: v.$space-xs;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: v.$space-sm;
+  }
+
+  .main {
+    padding: v.$space-xs;
+  }
+
+  .footer {
+    padding: v.$space-xs v.$space-sm;
+  }
+}
